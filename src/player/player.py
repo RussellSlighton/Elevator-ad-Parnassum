@@ -1,6 +1,6 @@
 from typing import List
 
-from src.player.equalTemperamentSinSynth import *
+from src.player.equalTemperamentSynth import *
 from src.types import *
 
 # Entrypoint for external users
