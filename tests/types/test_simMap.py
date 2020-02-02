@@ -1,12 +1,6 @@
 import pytest
 
 from src.types.simMap import *
-from src.types.simMap import __getNoteLength, __getPitches
-
-def test_privates():
-    tl = makeTemporalisedLine([1, 2, 3], NoteLength.EIGHTH)
-    assert __getNoteLength(tl) == 8
-    assert __getPitches(tl) == [1, 2, 3]
 
 @pytest.fixture
 def cf():
@@ -34,9 +28,9 @@ def s4(s3):
     return s3 + [species4]
 
 def test_fixtures(s4):
-    cfBeats = len(__getPitches(s4[0])) / __getNoteLength(s4[0])
+    cfBeats = len(getPitches(s4[0])) / getNoteLength(s4[0])
     for s in range(1, 5):
-        assert cfBeats == len(__getPitches(s4[s])) / __getNoteLength(s4[s])
+        assert cfBeats == len(getPitches(s4[s])) / getNoteLength(s4[s])
 
 def test_make_temporalised_line(cf):
     assert cf[0] == ([1, 9], 1)
@@ -45,7 +39,7 @@ def test_make_sim_map_to_s1(s1, cf):
     olds = cf
     new = s1[1]
     sm = makeSimMap(olds, new)
-    for p in __getPitches(new):
+    for p in getPitches(new):
         assert sm[p] == {p}
 
 def test_make_sim_map_to_s4(s4, s3):
