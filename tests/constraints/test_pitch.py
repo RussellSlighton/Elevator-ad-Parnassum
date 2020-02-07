@@ -2,82 +2,75 @@ import pytest
 
 from src.constraints.pitch import *
 
-def test_isNApart_z3_primitives():
-    assert not isNApart(1, Int(""), Int("")), "isNApart type checks on z3 Ints"
+def run2(function, arg1, arg2):
+    s = Solver()
+    s.add(Int("1") == arg1)
+    s.add(Int("2") == arg2)
+    s.add(function(arg1, arg2))
+    return s
+
+def run3(function, arg0, arg1, arg2):
+    s = Solver()
+    s.add(Int("1") == arg1)
+    s.add(Int("2") == arg2)
+    s.add(function(arg0, arg1, arg2))
+    return s
 
 def test_isNApart_negative():
-    assert isNApart(1, -2, -1), "isNApart works on negatives"
+    assert run3(isNthInterval, 1, -2, -1).check() == sat, "isNApart works on negatives"
 
 def test_isNApart_positive():
-    assert isNApart(1, 1, 2), "isNApart works on positives"
-
-def test_isNApart__not_abs():
-    assert not isNApart(1, 2, 1), "isNApart does not use absolute value"
+    assert run3(isNthInterval, 1, 1, 2).check() == sat, "isNApart works on positives"
 
 def test_is_unison():
-    assert isUnison(0, 0)
-    assert isUnison(1, 1)
-    assert isUnison(-1, -1)
-    assert not isUnison(1, 2)
+    assert run2(isUnison, 0, 0).check() == sat
+    assert run2(isUnison, 1, 1).check() == sat
+    assert run2(isUnison, -1, -1).check() == sat
+    assert run2(isUnison, 1, 2).check() == unsat
 
 def test_is_second():
-    assert isSecond(1, 2)
-    assert isSecond(-2, -1)
-    assert not isSecond(1, 1)
+    assert run2(isSecond, 1, 2).check() == sat
+    assert run2(isSecond, -2, -1).check() == sat
+    assert run2(isSecond, 1, 1).check() == unsat
 
 def test_is_third():
-    assert isThird(1, 3)
-    assert isThird(-3, -1)
-    assert not isThird(1, 1)
+    assert run2(isThird, 1, 3).check() == sat
+    assert run2(isThird, -3, -1).check() == sat
+    assert run2(isThird, 1, 1).check() == unsat
 
 def test_is_fourth():
-    assert isFourth(1, 4)
-    assert isFourth(-4, -1)
-    assert not isFourth(1, 1)
+    assert run2(isFourth, 1, 4).check() == sat
+    assert run2(isFourth, -4, -1).check() == sat
+    assert run2(isFourth, 1, 1).check() == unsat
 
 def test_is_fifth():
-    assert isFifth(1, 5)
-    assert isFifth(-5, -1)
-    assert not isFifth(1, 1)
+    assert run2(isFifth, 1, 5).check() == sat
+    assert run2(isFifth, -5, -1).check() == sat
+    assert run2(isFifth, 1, 1).check() == unsat
 
 def test_is_sixth():
-    assert isSixth(1, 6)
-    assert isSixth(-6, -1)
-    assert not isSixth(1, 1)
+    assert run2(isSixth, 1, 6).check() == sat
+    assert run2(isSixth, -6, -1).check() == sat
+    assert run2(isSixth, 1, 1).check() == unsat
 
 def test_is_seventh():
-    assert isSeventh(1, 7)
-    assert isSeventh(-7, -1)
-    assert not isSeventh(1, 1)
+    assert run2(isSeventh, 1, 7).check() == sat
+    assert run2(isSeventh, -7, -1).check() == sat
+    assert run2(isSeventh, 1, 1).check() == unsat
 
 def test_is_octave():
-    assert isOctave(1, 8)
-    assert isOctave(-8, -1)
-    assert not isOctave(1, 1)
+    assert run2(isOctave, 1, 8).check() == sat
+    assert run2(isOctave, -8, -1).check() == sat
+    assert run2(isOctave, 1, 1).check() == unsat
 
 # TODO: This really should be mocked
 @pytest.fixture
 def s():
     return Solver()
 
-def ppHelper(n1, n2, s):
-    s.push()
-    s.add(isPalestrinaPerfect(n1, n2))
-    res = s.check()
-    s.pop()
-    return res
-
-def test_is_palestrina_perfect(s):
-    assert ppHelper(1, 8, s) == sat, "Octave is PP"
-    assert ppHelper(1, 1, s) == sat, "Unison is PP"
-    assert ppHelper(1, 5, s) == sat, "Octave is PP"
-    assert ppHelper(1, 6, s) == unsat, "Sixth is not PP"
-    assert ppHelper(8, 1, s) == unsat, "backwards eight is not PP"
-    assert ppHelper(5, 1, s) == unsat, "backwards fifth is not PP"
-
 def consHelper(n1, n2, s):
     s.push()
-    s.add(isConsonant(n1, n2))
+    s.add(isInTriad(n1, n2))
     res = s.check()
     s.pop()
     return res
@@ -88,9 +81,6 @@ def test_is_consonant(s):
     assert consHelper(1, 5, s) == sat, "Fifth is consonant"
     assert consHelper(1, 8, s) == sat, "Octave is consonant"
     assert consHelper(1, 6, s) == unsat, "Sixth is not consonant"
-    assert consHelper(3, 1, s) == unsat, "backwards Third is not consonant"
-    assert consHelper(5, 1, s) == unsat, "backwards fifth is not consonant"
-    assert consHelper(8, 1, s) == unsat, "backwards octave is not consonant"
 
 def triadicHelper(tonic, n1, n2, n3, s):
     s.push()
@@ -176,3 +166,20 @@ def test_is_interval_or_smaller(s):
     assert smallerHelper(Interval.UNISON, 1, 2, s) == unsat, "func should judge by interval, not distance"
     assert smallerHelper(Interval.SECOND, 1, 2, s) == sat, "func should judge by interval"
     assert smallerHelper(Interval.THIRD, 1, 2, s) == sat, "Larger intervals count too"
+
+def isDissonantHelper(n1, n2, s):
+    s.push()
+    s.add(isDissonant(n1, n2))
+    res = s.check()
+    s.pop()
+    return res
+
+def test_is_dissonant(s):
+    assert isDissonantHelper(1, 7, s) == sat
+    assert isDissonantHelper(1, 2, s) == sat
+    assert isDissonantHelper(1, 4, s) == unsat
+    assert isDissonantHelper(1, 5, s) == unsat
+    assert isDissonantHelper(7, 1, s) == sat
+    assert isDissonantHelper(2, 1, s) == sat
+    assert isDissonantHelper(4, 1, s) == unsat
+    assert isDissonantHelper(5, 1, s) == unsat

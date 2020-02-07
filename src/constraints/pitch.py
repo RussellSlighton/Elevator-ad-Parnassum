@@ -4,44 +4,48 @@ from src.types.interval import Interval
 from src.types.z3Utils import logicalAbs
 
 # Note, only works upwards - C:G is a fifth, not a third.
-def isNApart(n, n1, n2):
-    return (n2 - n1) == n
+def isNthInterval(n, n1, n2):
+    return logicalAbs(n2 - n1) == int(n)
 
 def isUnison(n1, n2):
-    return isNApart(int(Interval.UNISON), n1, n2, )
+    return isNthInterval(int(Interval.UNISON), n1, n2)
 
 def isSecond(n1, n2):
-    return isNApart(int(Interval.SECOND), n1, n2)
+    return isNthInterval(int(Interval.SECOND), n1, n2)
 
 def isThird(n1, n2):
-    return isNApart(int(Interval.THIRD), n1, n2)
+    return isNthInterval(int(Interval.THIRD), n1, n2)
 
 def isFourth(n1, n2):
-    return isNApart(int(Interval.FOURTH), n1, n2)
+    return isNthInterval(int(Interval.FOURTH), n1, n2)
 
 def isFifth(n1, n2):
-    return isNApart(int(Interval.FIFTH), n1, n2)
+    return isNthInterval(int(Interval.FIFTH), n1, n2)
 
 def isSixth(n1, n2):
-    return isNApart(int(Interval.SIXTH), n1, n2)
+    return isNthInterval(int(Interval.SIXTH), n1, n2)
 
 def isSeventh(n1, n2):
-    return isNApart(int(Interval.SEVENTH), n1, n2)
+    return isNthInterval(int(Interval.SEVENTH), n1, n2)
 
 def isOctave(n1, n2):
-    return isNApart(int(Interval.OCTAVE), n1, n2)
+    return isNthInterval(int(Interval.OCTAVE), n1, n2)
 
-def isPalestrinaPerfect(tonicIndex, n):
-    return Or(isOctave(tonicIndex, n), isUnison(tonicIndex, n), isFifth(tonicIndex, n))
+def isDissonant(n1, n2):
+    return Or(isSecond(n1, n2), isSeventh(n1, n2))
 
-def isConsonant(n1, n2):
+# TODO: Must made this consonant mod octave!
+def isInTriad(n1, n2):
     return Or(isUnison(n1, n2), isThird(n1, n2), isFifth(n1, n2), isOctave(n1, n2))
 
+# TODO: Must made this consonant mod octave!
 def isTriadic(tonicIndex, n1, n2, n3):
-    return And(isConsonant(tonicIndex, n1),
-               isConsonant(tonicIndex, n2),
-               isConsonant(tonicIndex, n3)
+    return And(isInTriad(tonicIndex, n1),
+               isInTriad(tonicIndex, n2),
+               isInTriad(tonicIndex, n3)
                )
+
+# TODO: Add perfect and imperfect consonances
 
 def isStep(n1, n2):
     return logicalAbs(n1 - n2) == int(Interval.SECOND)

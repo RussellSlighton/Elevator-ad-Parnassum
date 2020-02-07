@@ -10,7 +10,10 @@ def makeSimMap(oldLines: List[TemporalisedLine], newLine: TemporalisedLine) -> S
     for oldLine in oldLines:
         assert getNoteLength(oldLine) <= getNoteLength(newLine)
         newNotesPerOldNote = int(getNoteLength(newLine) / getNoteLength(oldLine))
-        assert len(getPitches(newLine)) == len(getPitches(oldLine)) * newNotesPerOldNote
+        if not (len(getPitches(newLine)) == len(getPitches(oldLine)) * newNotesPerOldNote):
+            print("new line len: " + str(len(getPitches(newLine))) + " old line len: " + str(
+                len(getPitches(oldLine))) + " new notes per old note: " + str(newNotesPerOldNote))
+            assert False
 
         for i in range(0, len(getPitches(oldLine))):
             start = i * newNotesPerOldNote

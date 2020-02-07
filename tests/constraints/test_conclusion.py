@@ -38,9 +38,13 @@ def test_conclusion_is_tonic_or_octave(s, l):
     tonic = 1
     n0 = Int("L_0")
     n1 = Int("L_1")
+
     s.add(n1 != tonic)
     s.add(n1 != tonic + Interval.OCTAVE)
+    s.add(n1 != tonic - Interval.OCTAVE)
+
     s.add(conclusionIsTonicOrOctave(tonic, l))
+
     assert s.check() == unsat
 
 def test_conclusion_is_tonic_or_octave_tonic_disallowed(s, l):

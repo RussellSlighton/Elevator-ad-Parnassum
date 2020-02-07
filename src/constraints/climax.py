@@ -5,7 +5,7 @@ def hasClimaxPitch(tonicIndex: TonicIndex, line: Line):
     climaxPitch = Pitch(getName(line) + "_CP")
     return And(
         __climaxPitchIsHighestPitch(climaxPitch, line),
-        isPalestrinaPerfect(tonicIndex, climaxPitch),
+        isInTriad(tonicIndex, climaxPitch),
         __onlyOneNoteIsClimax(climaxPitch, line)
     )
 

@@ -1,7 +1,7 @@
 from z3 import *
 
 from src.constraints import *
-from src.species.universal import getUniversalRequirements
+from src.species.universal import universalRequirements
 from src.types import *
 
 def defineCantusFirmus(length, name, tonicIndex, gamutLength):
@@ -10,11 +10,9 @@ def defineCantusFirmus(length, name, tonicIndex, gamutLength):
     line = makeLine(length, "CF_" + name)
 
     constraints = And(
-        getUniversalRequirements(length, tonicIndex, gamutLength, opt, line),
+        universalRequirements(length, tonicIndex, gamutLength, opt, line),
         firstNoteIsTonic(tonicIndex, line),
         conclusionIsTonic(tonicIndex, line),
-        conclusionSteps(line),
-        hasClimaxPitch(tonicIndex, line),
     )
     opt.add(constraints)
     return opt, line

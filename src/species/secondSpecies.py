@@ -4,22 +4,20 @@ from src.constraints.beginning import *
 from src.species.universal import *
 from src.types import *
 
-def defineFirstSpecies(cantusFirmus: List[int], name, gamutLength):
+def defineSecondSpecies(cantusFirmus: List[int], name, gamutLength):
     tonicIndex = cantusFirmus[0]
-    length = len(cantusFirmus)
+    length = len(cantusFirmus) * 2
 
     # Really should be dep injected
     opt = Optimize()
-    line = makeLine(length, "FirstSpecies_" + name)
-    sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)],
-                    makeTemporalisedLine(line, NoteLength.WHOLE))
+    line = makeLine(length, "SecondSpecies" + name)
+    sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)], makeTemporalisedLine(line, NoteLength.HALF))
 
     constraints = And(
         universalRequirements(length, tonicIndex, gamutLength, opt, line),
         firstNoteAccompaniesCantusTonic(tonicIndex, line),
         unisonOnlyBeginningAndEnd(sm),
         noDissonantIntervals(sm),
-        # avoidFourths(opt, sm)
     )
     opt.add(constraints)
     return opt, line
