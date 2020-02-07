@@ -9,4 +9,5 @@ def universalRequirements(length, tonicIndex, gamutLength, opt, line):
                maximiseSteps(opt, line),
                conclusionSteps(line),
                hasClimaxPitch(tonicIndex, line),
+               conclusionIsInTriad(tonicIndex, line)
                )

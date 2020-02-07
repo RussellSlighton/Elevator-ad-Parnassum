@@ -40,8 +40,38 @@ def test_noDissonantIntervals_illegal_intervals_unsat(s, sm, l):
     assert s.check() == unsat
 
 def test_minimiseFourths_fourths_minimised(s, sm, l, cf):
-    s.add(avoidFourths(s, sm))
+    s.add(avoidsFourths(s, sm))
     s.check()
     for i in range(0, len(l)):
         pitch = s.model()[l[i]].as_long()
         assert not (pitch - cf[i] == Interval.FOURTH or cf[i] - pitch == Interval.FOURTH)
+
+def test_unaccentedPassingNotesDissonant_passingAllowsDissonant(s, sm, l, cf):
+    s.add(l[1] == cf[1] + 1)
+    s.add(unaccentedPassingNotesMayBeDissonant(sm))
+    assert s.check() == sat
+
+def test_unaccentedPassingNotesDissonant_passingAllowsConsonant(s, sm, l, cf):
+    s.add(l[1] == cf[1] + 2)
+    s.add(unaccentedPassingNotesMayBeDissonant(sm))
+    assert s.check() == sat
+
+def test_unaccentedPassingNotesDissonant_accentAllowsConsonant(s, sm, l, cf):
+    s.add(l[2] == cf[2] + 2)
+    s.add(unaccentedPassingNotesMayBeDissonant(sm))
+    assert s.check() == sat
+
+def test_minimiseDissonances_dissonances_minimised(s, sm, l, cf):
+    s.add(avoidsDissonance(s, sm))
+    s.check()
+    s2 = Solver()
+    for i in range(0, len(l)):
+        pitch = s.model()[l[i]].as_long()
+        s2.push()
+        n1 = Int("a")
+        n2 = Int("b")
+        s2.add(n1 == pitch)
+        s2.add(n2 == pitch)
+        s2.add(isDissonant(n1, n2))
+        assert s2.check() == unsat
+        s2.pop()

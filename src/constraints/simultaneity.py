@@ -10,9 +10,14 @@ def noDissonantIntervals(sm: SimMap):
     return And([Not(isDissonant(key, val)) for key in sm for val in sm[key]])
 
 def unaccentedPassingNotesMayBeDissonant(sm: SimMap, ):
-    And([Not(isDissonant(key, val)) for key in sm[::2] for val in sm[key]])
+    return And([Not(isDissonant(key, val)) for key in list(sm.keys())[::2] for val in sm[key]])
 
-def avoidFourths(opt, sm: SimMap):
+def avoidsFourths(opt, sm: SimMap):
     isFourthInds = [isFourth(val, key) for key in sm for val in sm[key]]
     minimise(opt, isFourthInds)
+    return True
+
+def avoidsDissonance(opt, sm: SimMap):
+    isDis = [isDissonant(key, val) for key in sm for val in sm[key]]
+    minimise(opt, isDis)
     return True

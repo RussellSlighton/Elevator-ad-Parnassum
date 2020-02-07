@@ -14,3 +14,6 @@ def conclusionIsTonicOrOctave(tonicIndex, line: Line):
 
 def conclusionSteps(line):
     return isStep(line[-1], line[-2])
+
+def conclusionIsInTriad(tonicIndex, line):
+    return isInTriad(line[-1], tonicIndex)

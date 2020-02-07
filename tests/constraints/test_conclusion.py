@@ -90,3 +90,44 @@ def test_conclusion_steps_up_allowed(s, l):
     s.add(n1 == n0 + 1)
     s.add(conclusionSteps(l))
     assert s.check() == sat
+
+def test_conclusionIsInTriad_works_onTriadics(s, l):
+    s.add(conclusionIsInTriad(1, l))
+    s.push()
+    s.add(l[-1] == 1)
+    assert s.check() == sat
+    s.pop()
+    s.push()
+    s.add(l[-1] == 3)
+    assert s.check() == sat
+    s.pop()
+    s.push()
+    s.add(l[-1] == 5)
+    assert s.check() == sat
+    s.pop()
+    s.push()
+    s.add(l[-1] == 8)
+    assert s.check() == sat
+    s.pop()
+    s.push()
+
+def test_conclusionIsInTriad_fails_onNon_Triadics(s, l):
+    s.add(conclusionIsInTriad(1, l))
+    s.add()
+    s.push()
+    s.add(l[-1] == 2)
+    assert s.check() == unsat
+    s.pop()
+    s.push()
+    s.add(l[-1] == 0)
+    assert s.check() == unsat
+    s.pop()
+    s.push()
+    s.add(l[-1] == 6)
+    assert s.check() == unsat
+    s.pop()
+    s.push()
+    s.add(l[-1] == 7)
+    assert s.check() == unsat
+    s.pop()
+    s.push()

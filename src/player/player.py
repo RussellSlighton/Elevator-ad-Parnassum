@@ -18,9 +18,14 @@ def playPiece(lines: List[TemporalisedLine], tonicIndex):
     player.open_stream()
     synthesizer = Synthesizer(osc1_waveform=Waveform.sine, osc1_volume=1.0, use_osc2=False)
 
-    for k in upperLine[0]:
+    for k in upperLine[0][:-1]:
         toPlay = [synth(mapping[n], tonicIndex) for n in sm[k].union([k])]
         player.play_wave(synthesizer.generate_chord([n for n in toPlay], .5))
+
+    # Play last note longer
+    k = upperLine[0][-1]
+    toPlay = [synth(mapping[n], tonicIndex) for n in sm[k].union([k])]
+    player.play_wave(synthesizer.generate_chord([n for n in toPlay], 1))
 
 def playVoice(notes, tonicIndex):
     player = Player()
