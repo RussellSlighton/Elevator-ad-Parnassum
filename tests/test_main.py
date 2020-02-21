@@ -17,7 +17,7 @@ def length():
 
 @pytest.fixture
 def gamutSize():
-    return 12
+    return 20
 
 @pytest.fixture
 def tonicIndex():
@@ -34,6 +34,10 @@ def s1(length, gamutSize, tonicIndex):
 @pytest.fixture
 def s2(length, gamutSize, tonicIndex):
     return createSecondSpecies(length, tonicIndex, gamutSize)
+
+@pytest.fixture
+def s3(length, gamutSize, tonicIndex):
+    return createThirdSpecies(length, tonicIndex, gamutSize)
 
 def test_extract_voices(opt, l):
     opt.add(l[0] == 10)
@@ -64,3 +68,12 @@ def test_createSecondSpecies(cf, s2, length, gamutSize, tonicIndex):
         assert p in range(0, gamutSize)
     print(s2)
     playPiece([makeTemporalisedLine(s2[0], NoteLength.WHOLE), makeTemporalisedLine(s2[1], NoteLength.HALF)], tonicIndex)
+
+
+def test_createThirdSpecies(cf, s3, length, gamutSize, tonicIndex):
+    assert len(s3[0]) == length
+    assert len(s3[1]) == length * 4
+    for p in s3[1]:
+        assert p in range(0, gamutSize)
+    print(s3)
+    playPiece([makeTemporalisedLine(s3[0], NoteLength.WHOLE), makeTemporalisedLine(s3[1], NoteLength.QUARTER)], tonicIndex)
