@@ -17,7 +17,7 @@ def length():
 
 @pytest.fixture
 def gamutSize():
-    return 20
+    return 10
 
 @pytest.fixture
 def tonicIndex():
@@ -77,3 +77,17 @@ def test_createThirdSpecies(cf, s3, length, gamutSize, tonicIndex):
         assert p in range(0, gamutSize)
     print(s3)
     playPiece([makeTemporalisedLine(s3[0], NoteLength.WHOLE), makeTemporalisedLine(s3[1], NoteLength.QUARTER)], tonicIndex)
+
+def test_createThroughSecondSpecies(cf, length, gamutSize, tonicIndex):
+    ls = createThroughSecond(length, tonicIndex, gamutSize)
+    print(ls)
+    ls = [[x+7*i for x in ls[i]] for i in range(0, len(ls))]
+    print(ls)
+    playPiece([makeTemporalisedLine(ls[0], NoteLength.WHOLE), makeTemporalisedLine(ls[1], NoteLength.WHOLE), makeTemporalisedLine(ls[2], NoteLength.HALF)], tonicIndex)
+
+def test_createThroughThirdSpecies(cf, length, gamutSize, tonicIndex):
+    ls = createThroughThird(length, tonicIndex, gamutSize)
+    print(ls)
+    ls = [[x+7*i for x in ls[i]] for i in range(0, len(ls))]
+    print(ls)
+    playPiece([makeTemporalisedLine(ls[0], NoteLength.WHOLE), makeTemporalisedLine(ls[1], NoteLength.WHOLE), makeTemporalisedLine(ls[2], NoteLength.HALF),makeTemporalisedLine(ls[3], NoteLength.QUARTER)], tonicIndex)
