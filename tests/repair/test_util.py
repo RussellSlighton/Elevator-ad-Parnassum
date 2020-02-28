@@ -1,13 +1,14 @@
-from src.repair.util import *
 import pytest
+
+from src.repair.util import *
 
 @pytest.fixture
 def cf():
-    return [1,2,3]
+    return [1, 2, 3]
 
 @pytest.fixture
 def s1():
-    return [1,2,3]
+    return [1, 2, 3]
 
 # Need to actually test if this produces a cf...
 def test_cf_spec(cf):
@@ -16,6 +17,6 @@ def test_cf_spec(cf):
     assert type(cfs[1][0]) == type(Int(''))
 
 def test_s1_spec(cf, s1):
-    s1s = s1Spec(cf,s1)
+    s1s = s1Spec(cf, s1)
     assert type(s1s[0]) == type(Optimize())
     assert type(s1s[1][0]) == type(Int(''))

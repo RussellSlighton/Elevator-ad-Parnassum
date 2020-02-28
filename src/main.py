@@ -37,7 +37,7 @@ def createThroughSecond(length, tonic, gamutLength):
     opt, line = defineThreeSimLines(cf, s1, "", gamutLength)
 
     s2 = extractVoice(opt, line)
-    return [cf, s1,s2]
+    return [cf, s1, s2]
 
 def createThroughThird(length, tonic, gamutLength):
     primitiveLines = createThroughSecond(length, tonic, gamutLength)
@@ -47,4 +47,4 @@ def createThroughThird(length, tonic, gamutLength):
     opt, line = defineFourSimLines(cf, s1, s2, "", gamutLength)
 
     s3 = extractVoice(opt, line)
-    return [cf, s1,s2, s3]
+    return [cf, s1, s2, s3]

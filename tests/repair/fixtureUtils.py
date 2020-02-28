@@ -11,11 +11,11 @@ def badCF():
 
 @pytest.fixture
 def reallyBadCF(badCF):
-    return [1,2,1,1]
+    return [1, 2, 1, 1]
 
 @pytest.fixture
 def prettyBadCF(badCF):
-    return [1,1,3,2,2]
+    return [1, 1, 3, 2, 2]
 
 # GGG -> good cf, good s1, good s2, ...
 # GBG -> good cf, bad s1, good s2,...

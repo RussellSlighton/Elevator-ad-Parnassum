@@ -2,7 +2,7 @@
 
 from src.types.temporalisedLine import *
 
-#TODO: Replace this structure with more sane varient - just return a set...
+# TODO: Replace this structure with more sane varient - just return a set...
 # Also, refactor out the slotting functionality to a slotmap.
 
 SimMap = Dict[Any, Set[Any]]

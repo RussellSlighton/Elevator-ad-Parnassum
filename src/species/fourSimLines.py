@@ -1,5 +1,3 @@
-from typing import List
-
 from src.constraints.beginning import *
 from src.species.universal import *
 from src.types import *
@@ -11,12 +9,14 @@ def defineFourSimLines(cantusFirmus, firstSpecies, secondSpecies, name, gamutLen
     # Really should be dep injected
     opt = Optimize()
     line = makeLine(length, "throughThird" + name)
-    sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE),makeTemporalisedLine(firstSpecies, NoteLength.WHOLE), makeTemporalisedLine(secondSpecies, NoteLength.HALF)],  makeTemporalisedLine(line, NoteLength.QUARTER))
+    sm = makeSimMap(
+        [makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE), makeTemporalisedLine(firstSpecies, NoteLength.WHOLE),
+         makeTemporalisedLine(secondSpecies, NoteLength.HALF)], makeTemporalisedLine(line, NoteLength.QUARTER))
 
     constraints = And(
         universalRequirements(length, tonicIndex, gamutLength, opt, line),
         firstNoteAccompaniesCantusTonic(tonicIndex, line),
-        #unisonOnlyBeginningAndEnd(sm),
+        # unisonOnlyBeginningAndEnd(sm),
         noDissonantIntervals(sm),
         avoidsDissonance(opt, sm)
     )

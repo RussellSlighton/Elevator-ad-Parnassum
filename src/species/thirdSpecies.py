@@ -11,7 +11,8 @@ def defineThirdSpecies(cantusFirmus: List[int], name, gamutLength):
     # Really should be dep injected
     opt = Optimize()
     line = makeLine(length, "ThirdSpecies" + name)
-    sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)], makeTemporalisedLine(line, NoteLength.QUARTER))
+    sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)],
+                    makeTemporalisedLine(line, NoteLength.QUARTER))
 
     constraints = And(
         universalRequirements(length, tonicIndex, gamutLength, opt, line),
