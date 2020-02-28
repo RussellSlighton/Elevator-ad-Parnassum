@@ -3,6 +3,7 @@ from z3 import *
 from src.species import *
 from src.types import *
 
+# TODO: This helper function is used in repair/repair - this func needs to be moved!
 def extractVoice(opt: Optimize, line: Line):
     if opt.check() != sat:
         raise Exception("Species or CF not satisfiable")
