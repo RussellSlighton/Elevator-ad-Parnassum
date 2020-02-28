@@ -30,11 +30,21 @@ def createThirdSpecies(length, tonic, gamutLength):
     opt, line = defineThirdSpecies(cf, "", gamutLength)
     return [cf, extractVoice(opt, line)]
 
+def createThroughSecond(length, tonic, gamutLength):
+    primitiveLines = createFirstSpecies(length, tonic, gamutLength)
+    cf = primitiveLines[0]
+    s1 = primitiveLines[1]
+    opt, line = defineThreeSimLines(cf, s1, "", gamutLength)
+
+    s2 = extractVoice(opt, line)
+    return [cf, s1,s2]
+
 def createThroughThird(length, tonic, gamutLength):
-    cf = createCantusFirmus(length, tonic, gamutLength)
+    primitiveLines = createThroughSecond(length, tonic, gamutLength)
+    cf = primitiveLines[0]
+    s1 = primitiveLines[1]
+    s2 = primitiveLines[2]
+    opt, line = defineFourSimLines(cf, s1, s2, "", gamutLength)
 
-    opt, s1 = defineFirstSpecies(cf, "", gamutLength)
-    s1 = extractVoice(opt, s1)
-
-    opt, s1 = defineFirstSpecies(cf, "", gamutLength)
-    s1 = extractVoice(opt, s1)
+    s3 = extractVoice(opt, line)
+    return [cf, s1,s2, s3]
