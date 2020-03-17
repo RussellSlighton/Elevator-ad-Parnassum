@@ -32,7 +32,7 @@ def isOctave(n1, n2):
     return isNthInterval(int(Interval.OCTAVE), n1, n2)
 
 def isDissonant(n1, n2):
-    return Or(isSecond(n1, n2), isSeventh(n1, n2))
+    return Or(isSecond(n1, n2), isSeventh(n1, n2), isFourth(n1,n2))
 
 # TODO: Must made this consonant mod octave!
 def isInTriad(n1, n2):
