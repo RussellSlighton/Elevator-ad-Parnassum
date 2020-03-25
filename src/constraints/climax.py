@@ -1,8 +1,8 @@
 from src.constraints.pitch import *
 from src.types import *
 
-def hasClimaxPitch(tonicIndex: TonicIndex, line: Line):
-    climaxPitch = Pitch(getName(line) + "_CP")
+def hasClimaxPitch(tonicIndex: int, line: Line):
+    climaxPitch = Pitch(line.name + "_CP")
     return And(
         __climaxPitchIsHighestPitch(climaxPitch, line),
         isInTriad(tonicIndex, climaxPitch),

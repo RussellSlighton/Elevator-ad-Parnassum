@@ -10,7 +10,7 @@ def defineFirstSpecies(cantusFirmus: List[int], name, gamutLength):
 
     # Really should be dep injected
     opt = Optimize()
-    line = makeLine(length, "FirstSpecies_" + name)
+    line = Line(length, "FirstSpecies_" + name)
     sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)],
                     makeTemporalisedLine(line, NoteLength.WHOLE))
 

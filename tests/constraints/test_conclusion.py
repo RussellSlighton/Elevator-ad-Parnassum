@@ -8,86 +8,75 @@ def s():
 
 @pytest.fixture
 def l():
-    return makeLine(2, "L")
+    return Line(2, "L")
 
-def test_conclusion_is_tonic(s, l):
+@pytest.fixture
+def firstNote(l):
+    return l[0]
+
+@pytest.fixture
+def lastNote(l):
+    return l[1]
+
+
+def test_conclusion_is_tonic(s, l, lastNote):
     tonic = 1
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n1 == tonic + 1)
+    s.add(lastNote == tonic + 1)
     s.add(conclusionIsTonic(tonic, l))
     assert s.check() == unsat
 
-def test_conclusion_is_tonic_leaves_other_notes_alone(s, l):
+def test_conclusion_is_tonic_leaves_other_notes_alone(s, l, firstNote):
     tonic = 1
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n0 == tonic + 1)
+    s.add(firstNote == tonic + 1)
     s.add(conclusionIsTonic(tonic, l))
     assert s.check() == sat
 
-def test_conclusion_is_tonic_or_octave_leaves_other_notes_alone(s, l):
+def test_conclusion_is_tonic_or_octave_leaves_other_notes_alone(s, l, firstNote):
     tonic = 1
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n0 == tonic + 1)
+    s.add(firstNote == tonic + 1)
     s.add(conclusionIsTonicOrOctave(tonic, l))
     assert s.check() == sat
 
-def test_conclusion_is_tonic_or_octave(s, l):
+def test_conclusion_is_tonic_or_octave(s, l, lastNote):
     tonic = 1
-    n0 = Int("L_0")
-    n1 = Int("L_1")
 
-    s.add(n1 != tonic)
-    s.add(n1 != tonic + Interval.OCTAVE)
-    s.add(n1 != tonic - Interval.OCTAVE)
+    s.add(lastNote != tonic)
+    s.add(lastNote != tonic + Interval.OCTAVE)
+    s.add(lastNote != tonic - Interval.OCTAVE)
 
     s.add(conclusionIsTonicOrOctave(tonic, l))
 
     assert s.check() == unsat
 
-def test_conclusion_is_tonic_or_octave_tonic_disallowed(s, l):
+def test_conclusion_is_tonic_or_octave_tonic_disallowed(s, l, lastNote ):
     tonic = 1
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n1 != tonic)
+    s.add(lastNote != tonic)
     s.add(conclusionIsTonicOrOctave(tonic, l))
     assert s.check() == sat
 
-def test_conclusion_is_tonic_or_octave_octave_disallowed(s, l):
+def test_conclusion_is_tonic_or_octave_octave_disallowed(s, l, lastNote):
     tonic = 1
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n1 != tonic + Interval.OCTAVE)
+    s.add(lastNote != tonic + Interval.OCTAVE)
     s.add(conclusionIsTonicOrOctave(tonic, l))
     assert s.check() == sat
 
-def test_conclusion_steps_unison_not_allowed(s, l):
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n1 == n0)
+def test_conclusion_steps_unison_not_allowed(s, l, firstNote, lastNote):
+    s.add(lastNote == firstNote)
     s.add(conclusionSteps(l))
     assert s.check() == unsat
 
-def test_conclusion_steps_leap_not_allowed(s, l):
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n1 == n0 + 3)
+def test_conclusion_steps_leap_not_allowed(s, l, firstNote, lastNote):
+    s.add(lastNote == firstNote + 3)
     s.add(conclusionSteps(l))
     assert s.check() == unsat
 
-def test_conclusion_steps_down_allowed(s, l):
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n1 == n0 - 1)
+def test_conclusion_steps_down_allowed(s, l, firstNote, lastNote):
+    s.add(lastNote == firstNote - 1)
     s.add(conclusionSteps(l))
     assert s.check() == sat
 
-def test_conclusion_steps_up_allowed(s, l):
-    n0 = Int("L_0")
-    n1 = Int("L_1")
-    s.add(n1 == n0 + 1)
+def test_conclusion_steps_up_allowed(s, l, firstNote, lastNote):
+    s.add(lastNote == firstNote + 1)
     s.add(conclusionSteps(l))
     assert s.check() == sat
 

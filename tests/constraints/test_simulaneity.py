@@ -8,7 +8,7 @@ def s():
 
 @pytest.fixture
 def l():
-    return makeLine(5, "L")
+    return Line(5, "L")
 
 @pytest.fixture
 def cf():
@@ -43,7 +43,7 @@ def test_minimiseFourths_fourths_minimised(s, sm, l, cf):
     s.add(avoidsFourths(s, sm))
     s.check()
     for i in range(0, len(l)):
-        pitch = s.model()[l[i]].as_long()
+        pitch = s.model()[l[i].degree].as_long() + 7 * s.model()[l[i].octave].as_long()
         assert not (pitch - cf[i] == Interval.FOURTH or cf[i] - pitch == Interval.FOURTH)
 
 def test_unaccentedPassingNotesDissonant_passingAllowsDissonant(s, sm, l, cf):
@@ -66,7 +66,7 @@ def test_minimiseDissonances_dissonances_minimised(s, sm, l, cf):
     s.check()
     s2 = Solver()
     for i in range(0, len(l)):
-        pitch = s.model()[l[i]].as_long()
+        pitch = s.model()[l[i].degree].as_long() + 7 * s.model()[l[i].octave].as_long()
         s2.push()
         n1 = Int("a")
         n2 = Int("b")

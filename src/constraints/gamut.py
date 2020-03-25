@@ -7,7 +7,7 @@ def pitchesWithinGamut(gamutLength: int, line: Line):
     return And([And(0 <= p, p < gamutLength) for p in line])
 
 def maximisesUniquePitchCount(gamutLength: int, opt: Optimize, line: Line):
-    uniquePitchInds = [Or([IntVal(i) == p for p in line]) for i in
+    uniquePitchInds = [Or([p == IntVal(i) for p in line]) for i in
                        range(0, gamutLength)]
     maximise(opt, uniquePitchInds)
     return True

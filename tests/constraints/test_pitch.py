@@ -177,9 +177,9 @@ def isDissonantHelper(n1, n2, s):
 def test_is_dissonant(s):
     assert isDissonantHelper(1, 7, s) == sat
     assert isDissonantHelper(1, 2, s) == sat
-    assert isDissonantHelper(1, 4, s) == unsat
+    assert isDissonantHelper(1, 4, s) == sat
     assert isDissonantHelper(1, 5, s) == unsat
     assert isDissonantHelper(7, 1, s) == sat
     assert isDissonantHelper(2, 1, s) == sat
-    assert isDissonantHelper(4, 1, s) == unsat
+    assert isDissonantHelper(4, 1, s) == sat
     assert isDissonantHelper(5, 1, s) == unsat

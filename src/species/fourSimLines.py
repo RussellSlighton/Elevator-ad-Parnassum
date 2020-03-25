@@ -8,7 +8,7 @@ def defineFourSimLines(cantusFirmus, firstSpecies, secondSpecies, name, gamutLen
 
     # Really should be dep injected
     opt = Optimize()
-    line = makeLine(length, "throughThird" + name)
+    line = Line(length, "throughThird" + name)
     sm = makeSimMap(
         [makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE), makeTemporalisedLine(firstSpecies, NoteLength.WHOLE),
          makeTemporalisedLine(secondSpecies, NoteLength.HALF)], makeTemporalisedLine(line, NoteLength.QUARTER))

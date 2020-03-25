@@ -7,7 +7,7 @@ from src.types import *
 def extractVoice(opt: Optimize, line: Line):
     if opt.check() != sat:
         raise Exception("Species or CF not satisfiable")
-    return [opt.model()[p].as_long() for p in line]
+    return [opt.model()[p.degree].as_long() + 7 * opt.model()[p.octave].as_long() for p in line]
 
 def createCantusFirmus(length, tonic, gamutLength):
     if gamutLength - tonic < 3:
@@ -17,6 +17,7 @@ def createCantusFirmus(length, tonic, gamutLength):
 
 def createFirstSpecies(length, tonic, gamutLength):
     cf = createCantusFirmus(length, tonic, gamutLength)
+    return cf
     opt, line = defineFirstSpecies(cf, "", gamutLength)
     return [cf, extractVoice(opt, line)]
 

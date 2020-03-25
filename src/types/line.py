@@ -1,13 +1,21 @@
 from typing import List
 
-from src.types.pitch import Pitch, makePitch
+from src.types.pitch import Pitch
 
-Line = List[Pitch]
-TonicIndex = int
+class Line:
+    def __init__(self, lineLength : int, name : str):
+        self.lineLength = lineLength
+        self.name = name
+        self.pitches = [Pitch(name + "_" + str(i)) for i in range(0, lineLength)]
 
-def makeLine(lineLength, name) -> Line:
-    pitches = [makePitch(name + "_" + str(i)) for i in range(0, lineLength)]
-    return pitches
+    def __getitem__(self, item):
+        return self.pitches[item]
 
-def getName(line: Line):
-    return str(line[0]).split("_")[0]
+    def __iter__(self):
+        return (x for x in self.pitches)
+
+    def __repr__(self):
+        return str("name: " + repr(self.pitches))
+
+    def __len__(self):
+        return len(self.pitches)

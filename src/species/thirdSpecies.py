@@ -10,7 +10,7 @@ def defineThirdSpecies(cantusFirmus: List[int], name, gamutLength):
 
     # Really should be dep injected
     opt = Optimize()
-    line = makeLine(length, "ThirdSpecies" + name)
+    line = Line(length, "ThirdSpecies" + name)
     sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)],
                     makeTemporalisedLine(line, NoteLength.QUARTER))
 

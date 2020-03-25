@@ -7,7 +7,7 @@ from src.types import *
 def defineCantusFirmus(length, name, tonicIndex, gamutLength):
     # Really should be dep injected
     opt = Optimize()
-    line = makeLine(length, "CF_" + name)
+    line = Line(length, "CF_" + name)
 
     constraints = And(
         universalRequirements(length, tonicIndex, gamutLength, opt, line),

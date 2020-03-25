@@ -4,7 +4,7 @@ from src.constraints.motion import *
 
 @pytest.fixture
 def l():
-    return makeLine(4, 'l')
+    return Line(4, 'l')
 
 @pytest.fixture
 def s():
@@ -18,7 +18,7 @@ def test_maximiseSteps_leaps_still_possible(s, l):
 def test_maximiseSteps_stepsByDefault(s, l):
     s.add(maximiseSteps(s, l))
     assert s.check() == sat
-    ps = [s.model()[p].as_long() for p in l]
+    ps = [s.model()[p.degree].as_long() + 7 * s.model()[p.octave].as_long() for p in l]
     for i in range(0, len(l) - 1):
         assert abs(ps[i] - ps[i + 1]) <= 1
 

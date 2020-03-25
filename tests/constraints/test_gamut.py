@@ -4,7 +4,7 @@ from src.constraints.gamut import *
 
 @pytest.fixture
 def l():
-    return makeLine(4, 'l')
+    return Line(4, 'l')
 
 @pytest.fixture
 def s():
@@ -20,11 +20,10 @@ def test_gamut_bounds_pitch_limits_pitches(l, s):
 
 def test_maximisesUniquePitchCount_uses_as_much_of_gamut_as_possible(s, l):
     s.add(maximisesUniquePitchCount(5, s, l))
+    print(s)
     assert s.check() == sat, "Optimiser should still be sat if whole gamut cannot be filled"
 
-    foundPitches = []
-    for p in l:
-        foundPitches.append(s.model()[p].as_long())
+    foundPitches = [s.model()[p.degree].as_long() + 7 * s.model()[p.octave].as_long() for p in l]
     # Now we check if all notes are distinct
     s2 = Solver()
     s2.add(Distinct([Int(str(i)) for i in foundPitches]))

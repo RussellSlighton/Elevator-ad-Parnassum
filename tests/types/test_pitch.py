@@ -9,6 +9,12 @@ def pitches():
         pitches.append(Int(str(i)))
     return pitches
 
-def test_make_pitch():
+def test_pitch():
     ID = "a"
-    assert makePitch(ID) == Int(ID), "Pitch should be a Z3 int"
+    pitch = Pitch(ID)
+    assert pitch.degree == Int(ID + "_Degree")
+    assert pitch.octave == Int(ID + "_Octave")
+
+def test_asInt():
+    pitch = Pitch("")
+    assert pitch.asInt() == pitch.asInt()

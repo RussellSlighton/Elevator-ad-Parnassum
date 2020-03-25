@@ -9,7 +9,7 @@ def opt():
 
 @pytest.fixture
 def l():
-    return makeLine(2, "l")
+    return Line(2, "l")
 
 @pytest.fixture
 def length():
@@ -79,18 +79,18 @@ def test_createThirdSpecies(cf, s3, length, gamutSize, tonicIndex):
               tonicIndex)
 
 def test_createThroughSecondSpecies(cf, length, gamutSize, tonicIndex):
-    ls = createThroughSecond(length, tonicIndex, gamutSize)
+    ls = createThroughSecond(length, tonicIndex, gamutSize+2)
     print(ls)
     ls = [[x + 7 * i for x in ls[i]] for i in range(0, len(ls))]
     print(ls)
     playPiece([makeTemporalisedLine(ls[0], NoteLength.WHOLE), makeTemporalisedLine(ls[1], NoteLength.WHOLE),
                makeTemporalisedLine(ls[2], NoteLength.HALF)], tonicIndex)
 
-def test_createThroughThirdSpecies(cf, length, gamutSize, tonicIndex):
-    ls = createThroughThird(length, tonicIndex, gamutSize)
-    print(ls)
-    ls = [[x + 7 * i for x in ls[i]] for i in range(0, len(ls))]
-    print(ls)
-    playPiece([makeTemporalisedLine(ls[0], NoteLength.WHOLE), makeTemporalisedLine(ls[1], NoteLength.WHOLE),
-               makeTemporalisedLine(ls[2], NoteLength.HALF), makeTemporalisedLine(ls[3], NoteLength.QUARTER)],
-              tonicIndex)
+# def test_createThroughThirdSpecies(cf, length, gamutSize, tonicIndex):
+#     ls = createThroughThird(length, tonicIndex, gamutSize)
+#     print(ls)
+#     ls = [[x + 7 * i for x in ls[i]] for i in range(0, len(ls))]
+#     print(ls)
+#     playPiece([makeTemporalisedLine(ls[0], NoteLength.WHOLE), makeTemporalisedLine(ls[1], NoteLength.WHOLE),
+#                makeTemporalisedLine(ls[2], NoteLength.HALF), makeTemporalisedLine(ls[3], NoteLength.QUARTER)],
+#               tonicIndex)

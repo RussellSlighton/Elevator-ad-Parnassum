@@ -2,12 +2,12 @@ import pytest
 
 @pytest.fixture
 def goodCF():
-    return [1, 3, 6, 7, 8, 5, 2, 1]
+    return [1, 4, 5, 8, 6, 3, 2, 1]
 
 @pytest.fixture
 def badCF():
     # does not end on tonic
-    return [1, 3, 6, 7, 8, 5, 2, 3]
+    return [1, 4, 5, 8, 6, 3, 2, 3]
 
 @pytest.fixture
 def reallyBadCF(badCF):
@@ -22,7 +22,7 @@ def prettyBadCF(badCF):
 # ...
 @pytest.fixture
 def GGs1(goodCF):
-    return [8, 7, 4, 5, 3, 2, 0, 1]
+    return [1, 2, 5, 6, 8, 7, 4, 3]
 
 @pytest.fixture
 def GBS1(goodCF):
@@ -31,7 +31,7 @@ def GBS1(goodCF):
 
 @pytest.fixture
 def BGS1(badCF):
-    return [8, 7, 4, 5, 3, 2, 0, 1]
+    return [1, 2, 3, 6, 4, 5, 7, 8]
 
 @pytest.fixture
 def BBS1(badCF):

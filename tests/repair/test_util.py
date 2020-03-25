@@ -1,6 +1,7 @@
 import pytest
 
 from src.repair.util import *
+from src.types import Pitch
 
 @pytest.fixture
 def cf():
@@ -14,9 +15,9 @@ def s1():
 def test_cf_spec(cf):
     cfs = cfSpec(cf)
     assert type(cfs[0]) == type(Optimize())
-    assert type(cfs[1][0]) == type(Int(''))
+    assert type(cfs[1][0]) == type(Pitch(''))
 
 def test_s1_spec(cf, s1):
     s1s = s1Spec(cf, s1)
     assert type(s1s[0]) == type(Optimize())
-    assert type(s1s[1][0]) == type(Int(''))
+    assert type(s1s[1][0]) == type(Pitch(''))

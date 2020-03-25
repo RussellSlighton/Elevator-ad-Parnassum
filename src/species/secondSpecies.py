@@ -10,7 +10,7 @@ def defineSecondSpecies(cantusFirmus: List[int], name, gamutLength):
 
     # Really should be dep injected
     opt = Optimize()
-    line = makeLine(length, "SecondSpecies" + name)
+    line = Line(length, "SecondSpecies" + name)
     sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)], makeTemporalisedLine(line, NoteLength.HALF))
 
     constraints = And(
