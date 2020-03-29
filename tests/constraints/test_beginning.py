@@ -19,31 +19,30 @@ def secondNote(l):
     return l[1]
 
 def test_firstNoteMustBeTonic_allows_tonic(s, l, firstNote):
-    tonic = 1
+    tonic = ConstPitch(0, 0)
     s.add(firstNote == tonic)
-    s.add(firstNoteIsTonic(tonic, l))
+    s.add(firstNoteIsTonic(l))
     assert s.check() == sat
 
 def test_firstNoteMustBeTonic_must_be_Tonic(s, l, firstNote):
-    tonic = 0
-    s.add(firstNote.asInt() == 1)
-    s.add(firstNoteIsTonic(tonic, l))
+    tonic = ConstPitch(0, 0)
+    s.add(firstNote == ConstPitch(1, 0))
+    s.add(firstNoteIsTonic(l))
     assert s.check() == unsat
 
-def test_firstNoteMustBeTonic_does_not_constrain_later_notes(s, l, firstNote):
-    tonic = 1000
-    s.add(firstNote == tonic)
-    s.add(firstNoteIsTonic(tonic, l))
+def test_firstNoteMustBeTonic_does_not_constrain_later_notes(s, l, secondNote):
+    tonic = ConstPitch(1000)
+    s.add(secondNote == tonic)
+    s.add(firstNoteIsTonic(l))
     assert s.check() == sat
 
 def test_firstNoteAccompaniesCantusTonic_unison_is_legal(s, l, firstNote):
-    tonic = 1
+    tonic = ConstPitch(0)
     s.add(firstNote == tonic)
-    s.add(firstNoteAccompaniesCantusTonic(1, l))
+    s.add(firstNoteAccompaniesCantusTonic(l))
     assert s.check() == sat
 
 def test_firstNoteAccompaniesCantusTonic_higher_unsat_on_illegal(s, l, firstNote):
-    tonic = 1
-    s.add(firstNote == tonic + 10)
-    s.add(firstNoteAccompaniesCantusTonic(1, l))
+    s.add(firstNote == ConstPitch(11))
+    s.add(firstNoteAccompaniesCantusTonic(l))
     assert s.check() == unsat

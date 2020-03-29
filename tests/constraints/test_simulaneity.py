@@ -12,7 +12,7 @@ def l():
 
 @pytest.fixture
 def cf():
-    return [1, 2, 3, 2, 1]
+    return [ConstPitch(x) for x in [0, 1, 2, 1, 0]]
 
 @pytest.fixture
 def sm(cf, l):
@@ -20,44 +20,46 @@ def sm(cf, l):
 
 def test_onlyUnisonBeginningAndEnd_allows_unison_beginning_and_end(s, sm, l):
     s.add(unisonOnlyBeginningAndEnd(sm))
-    s.add(l[0] == 1)
-    s.add(l[-1] == 1)
+    s.add(l[0] == ConstPitch(0))
+    s.add(l[-1] == ConstPitch(0))
     assert s.check() == sat
 
 def test_onlyUnisonBeginningAndEnd_disallows_unison_in_middle(s, sm, l):
     s.add(unisonOnlyBeginningAndEnd(sm))
-    s.add(l[1] == 2)
+    s.add(l[1] == ConstPitch(1))
     assert s.check() == unsat
 
 def test_noDissonantIntervals_legal_intervals_sat(s, sm, l):
     s.add(noDissonantIntervals(sm))
-    s.add(l[0] == 3)
+    s.add(l[0] == ConstPitch(Interval.THIRD().semitoneDistance))
     assert s.check() == sat
 
 def test_noDissonantIntervals_illegal_intervals_unsat(s, sm, l):
     s.add(noDissonantIntervals(sm))
-    s.add(Or(l[0] == 2, l[0] == 7))
+    s.add(Or(l[0] == ConstPitch(Interval.SECOND().semitoneDistance),
+             l[0] == ConstPitch(Interval.SEVENTH().semitoneDistance)))
     assert s.check() == unsat
 
 def test_minimiseFourths_fourths_minimised(s, sm, l, cf):
     s.add(avoidsFourths(s, sm))
     s.check()
     for i in range(0, len(l)):
-        pitch = s.model()[l[i].degree].as_long() + 7 * s.model()[l[i].octave].as_long()
-        assert not (pitch - cf[i] == Interval.FOURTH or cf[i] - pitch == Interval.FOURTH)
+        pitch = s.model()[l[i].letter].as_long() + 12 * s.model()[l[i].octave].as_long()
+        assert not (pitch - cf[i].letter == Interval.FOURTH().semitoneDistance or cf[
+            i].letter - pitch == Interval.FOURTH().semitoneDistance)
 
 def test_unaccentedPassingNotesDissonant_passingAllowsDissonant(s, sm, l, cf):
-    s.add(l[1] == cf[1] + 1)
+    s.add(l[1] == ConstPitch(cf[1].letter + 2))
     s.add(unaccentedPassingNotesMayBeDissonant(sm))
     assert s.check() == sat
 
 def test_unaccentedPassingNotesDissonant_passingAllowsConsonant(s, sm, l, cf):
-    s.add(l[1] == cf[1] + 2)
+    s.add(l[1] == ConstPitch(cf[1].letter + 4))
     s.add(unaccentedPassingNotesMayBeDissonant(sm))
     assert s.check() == sat
 
 def test_unaccentedPassingNotesDissonant_accentAllowsConsonant(s, sm, l, cf):
-    s.add(l[2] == cf[2] + 2)
+    s.add(l[2] == ConstPitch(cf[2].letter + 4))
     s.add(unaccentedPassingNotesMayBeDissonant(sm))
     assert s.check() == sat
 
@@ -66,12 +68,12 @@ def test_minimiseDissonances_dissonances_minimised(s, sm, l, cf):
     s.check()
     s2 = Solver()
     for i in range(0, len(l)):
-        pitch = s.model()[l[i].degree].as_long() + 7 * s.model()[l[i].octave].as_long()
+        pitch = s.model()[l[i].letter].as_long() + 12 * s.model()[l[i].octave].as_long()
         s2.push()
-        n1 = Int("a")
-        n2 = Int("b")
-        s2.add(n1 == pitch)
-        s2.add(n2 == pitch)
+        n1 = VarPitch("a")
+        n2 = VarPitch("b")
+        s2.add(n1 == ConstPitch(pitch))
+        s2.add(n2 == ConstPitch(pitch))
         s2.add(isDissonant(n1, n2))
         assert s2.check() == unsat
         s2.pop()

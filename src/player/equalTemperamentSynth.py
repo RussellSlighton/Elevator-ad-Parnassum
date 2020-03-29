@@ -1,13 +1,11 @@
-from math import floor
-
 from pysine import sine
 
 TONIC = 440  # A4
 TWELFTH_ROOT_TWO = 1.059463094359
 DIST_A4_C4 = 9
 
-def synth(note, tonicIndex):
-    return TONIC * TWELFTH_ROOT_TWO ** (semitonesAway(note, tonicIndex) - DIST_A4_C4)
+def synth(note):
+    return TONIC * TWELFTH_ROOT_TWO ** (note - DIST_A4_C4)
 
 def playNotes(notes, tonicIndex):
     freqs = [synth(n, tonicIndex) for n in notes]
@@ -56,9 +54,3 @@ def __scalePositionToSemitones(pos):
 #         return 12
 #     else:
 #         raise ("Mistake in synth")
-
-def semitonesAway(note, tonicIndex):
-    scaledNote = __scalePositionToSemitones((note - tonicIndex) % 7)
-    octavesAway = floor((note - tonicIndex) / 7)
-    semitones = scaledNote + octavesAway * 12
-    return semitones

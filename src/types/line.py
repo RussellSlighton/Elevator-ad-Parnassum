@@ -1,12 +1,10 @@
-from typing import List
-
-from src.types.pitch import Pitch
+from src.types.pitch.varPitch import VarPitch
 
 class Line:
-    def __init__(self, lineLength : int, name : str):
+    def __init__(self, lineLength: int, name: str):
         self.lineLength = lineLength
         self.name = name
-        self.pitches = [Pitch(name + "_" + str(i)) for i in range(0, lineLength)]
+        self.pitches = [VarPitch(name + "_" + str(i)) for i in range(0, lineLength)]
 
     def __getitem__(self, item):
         return self.pitches[item]

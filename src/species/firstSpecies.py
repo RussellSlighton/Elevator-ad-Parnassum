@@ -15,11 +15,10 @@ def defineFirstSpecies(cantusFirmus: List[int], name, gamutLength):
                     makeTemporalisedLine(line, NoteLength.WHOLE))
 
     constraints = And(
-        universalRequirements(length, tonicIndex, gamutLength, opt, line),
-        firstNoteAccompaniesCantusTonic(tonicIndex, line),
+        universalRequirements(gamutLength, opt, line),
+        firstNoteAccompaniesCantusTonic(line),
         unisonOnlyBeginningAndEnd(sm),
         noDissonantIntervals(sm),
-        # avoidFourths(opt, sm)
     )
     opt.add(constraints)
     return opt, line

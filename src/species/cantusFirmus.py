@@ -4,15 +4,17 @@ from src.constraints import *
 from src.species.universal import universalRequirements
 from src.types import *
 
-def defineCantusFirmus(length, name, tonicIndex, gamutLength):
+def defineCantusFirmus(length, name, gamutLength):
     # Really should be dep injected
     opt = Optimize()
     line = Line(length, "CF_" + name)
 
     constraints = And(
-        universalRequirements(length, tonicIndex, gamutLength, opt, line),
-        firstNoteIsTonic(tonicIndex, line),
-        conclusionIsTonic(tonicIndex, line),
+        universalRequirements(gamutLength, opt, line),
+        firstNoteIsTonic(line),
+        conclusionIsTonic(line),
+        hasClimaxPitch(line),
+        climaxMax(line, ConstPitch(int(gamutLength)))
     )
     opt.add(constraints)
     return opt, line

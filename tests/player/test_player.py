@@ -1,9 +1,18 @@
 from src.player.player import *
 
 # Manual test
-if __name__ == "__main__":
-    v1 = makeTemporalisedLine([3, 4, 5, 6, 7], NoteLength.WHOLE)
-    v2 = makeTemporalisedLine([1, 5, 2, 6, 3, 7, 4, 8, 5, 9], NoteLength.HALF)
-    v3 = makeTemporalisedLine([8, 5, 9, 6, 10, 7, 11, 8, 12, 9, 8, 5, 9, 6, 10, 7, 11, 8, 12, 9], NoteLength.QUARTER)
-    vs = [v1, v2, v3]
-    playPiece(vs, 1)
+def test_player():
+    v1 = makeTemporalisedLine(
+        [Interval.THIRD().semitoneDistance, Interval.FOURTH().semitoneDistance, Interval.FIFTH().semitoneDistance,
+         Interval.SIXTH().semitoneDistance, Interval.SEVENTH().semitoneDistance],
+        NoteLength.WHOLE)
+    v2 = makeTemporalisedLine(
+        [Interval.UNISON().semitoneDistance, Interval.FIFTH().semitoneDistance, Interval.SECOND().semitoneDistance,
+         Interval.SIXTH().semitoneDistance, Interval.THIRD().semitoneDistance, Interval.SEVENTH().semitoneDistance,
+         Interval.FOURTH().semitoneDistance, Interval.OCTAVE().semitoneDistance, Interval.FIFTH().semitoneDistance,
+         Interval.SECOND().semitoneDistance + Interval.OCTAVE().semitoneDistance], NoteLength.HALF)
+    vs = [v1, v2]
+    print(v1, v2)
+    # playVoice(getPitches(v1))
+    # playVoice(getPitches(v2))
+    playPiece(vs)

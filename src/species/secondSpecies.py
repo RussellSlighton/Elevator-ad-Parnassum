@@ -5,7 +5,6 @@ from src.species.universal import *
 from src.types import *
 
 def defineSecondSpecies(cantusFirmus: List[int], name, gamutLength):
-    tonicIndex = cantusFirmus[0]
     length = len(cantusFirmus) * 2
 
     # Really should be dep injected
@@ -14,8 +13,8 @@ def defineSecondSpecies(cantusFirmus: List[int], name, gamutLength):
     sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)], makeTemporalisedLine(line, NoteLength.HALF))
 
     constraints = And(
-        universalRequirements(length, tonicIndex, gamutLength, opt, line),
-        firstNoteAccompaniesCantusTonic(tonicIndex, line),
+        universalRequirements(gamutLength, opt, line),
+        firstNoteAccompaniesCantusTonic(line),
         unisonOnlyBeginningAndEnd(sm),
         noDissonantIntervals(sm),
     )

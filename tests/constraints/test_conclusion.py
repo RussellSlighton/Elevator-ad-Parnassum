@@ -18,46 +18,39 @@ def firstNote(l):
 def lastNote(l):
     return l[1]
 
-
 def test_conclusion_is_tonic(s, l, lastNote):
-    tonic = 1
-    s.add(lastNote == tonic + 1)
-    s.add(conclusionIsTonic(tonic, l))
+    s.add(lastNote == ConstPitch(2))
+    s.add(conclusionIsTonic(l))
     assert s.check() == unsat
 
 def test_conclusion_is_tonic_leaves_other_notes_alone(s, l, firstNote):
-    tonic = 1
-    s.add(firstNote == tonic + 1)
-    s.add(conclusionIsTonic(tonic, l))
+    s.add(firstNote == ConstPitch(2))
+    s.add(conclusionIsTonic(l))
     assert s.check() == sat
 
 def test_conclusion_is_tonic_or_octave_leaves_other_notes_alone(s, l, firstNote):
-    tonic = 1
-    s.add(firstNote == tonic + 1)
-    s.add(conclusionIsTonicOrOctave(tonic, l))
+    s.add(firstNote == ConstPitch(2))
+    s.add(conclusionIsTonicOrOctave(l))
     assert s.check() == sat
 
 def test_conclusion_is_tonic_or_octave(s, l, lastNote):
-    tonic = 1
+    s.add(lastNote != ConstPitch(0))
+    s.add(lastNote != ConstPitch(12))
+    s.add(lastNote != ConstPitch(-12))
 
-    s.add(lastNote != tonic)
-    s.add(lastNote != tonic + Interval.OCTAVE)
-    s.add(lastNote != tonic - Interval.OCTAVE)
-
-    s.add(conclusionIsTonicOrOctave(tonic, l))
+    s.add(conclusionIsTonicOrOctave(l))
 
     assert s.check() == unsat
 
-def test_conclusion_is_tonic_or_octave_tonic_disallowed(s, l, lastNote ):
-    tonic = 1
+def test_conclusion_is_tonic_or_octave_tonic_disallowed(s, l, lastNote):
+    tonic = ConstPitch(1)
     s.add(lastNote != tonic)
-    s.add(conclusionIsTonicOrOctave(tonic, l))
+    s.add(conclusionIsTonicOrOctave(l))
     assert s.check() == sat
 
 def test_conclusion_is_tonic_or_octave_octave_disallowed(s, l, lastNote):
-    tonic = 1
-    s.add(lastNote != tonic + Interval.OCTAVE)
-    s.add(conclusionIsTonicOrOctave(tonic, l))
+    s.add(lastNote != ConstPitch(Interval.OCTAVE().semitoneDistance))
+    s.add(conclusionIsTonicOrOctave(l))
     assert s.check() == sat
 
 def test_conclusion_steps_unison_not_allowed(s, l, firstNote, lastNote):
@@ -66,57 +59,57 @@ def test_conclusion_steps_unison_not_allowed(s, l, firstNote, lastNote):
     assert s.check() == unsat
 
 def test_conclusion_steps_leap_not_allowed(s, l, firstNote, lastNote):
-    s.add(lastNote == firstNote + 3)
+    s.add(lastNote == ConstPitch(0))
+    s.add(firstNote == ConstPitch(100))
     s.add(conclusionSteps(l))
     assert s.check() == unsat
 
 def test_conclusion_steps_down_allowed(s, l, firstNote, lastNote):
-    s.add(lastNote == firstNote - 1)
+    s.add(lastNote.flattened() < firstNote.flattened())
     s.add(conclusionSteps(l))
     assert s.check() == sat
 
 def test_conclusion_steps_up_allowed(s, l, firstNote, lastNote):
-    s.add(lastNote == firstNote + 1)
+    s.add(lastNote.flattened() > firstNote.flattened())
     s.add(conclusionSteps(l))
     assert s.check() == sat
 
 def test_conclusionIsInTriad_works_onTriadics(s, l):
-    s.add(conclusionIsInTriad(1, l))
+    s.add(conclusionIsInTriad(l))
     s.push()
-    s.add(l[-1] == 1)
+    s.add(l[-1] == ConstPitch(Interval.UNISON().semitoneDistance))
     assert s.check() == sat
     s.pop()
     s.push()
-    s.add(l[-1] == 3)
+    s.add(l[-1] == ConstPitch(Interval.THIRD().semitoneDistance))
     assert s.check() == sat
     s.pop()
     s.push()
-    s.add(l[-1] == 5)
+    s.add(l[-1] == ConstPitch(Interval.FIFTH().semitoneDistance))
     assert s.check() == sat
     s.pop()
     s.push()
-    s.add(l[-1] == 8)
+    s.add(l[-1] == ConstPitch(Interval.OCTAVE().semitoneDistance))
     assert s.check() == sat
     s.pop()
     s.push()
 
 def test_conclusionIsInTriad_fails_onNon_Triadics(s, l):
-    s.add(conclusionIsInTriad(1, l))
-    s.add()
+    s.add(conclusionIsInTriad(l))
     s.push()
-    s.add(l[-1] == 2)
+    s.add(l[-1] == ConstPitch(Interval.SECOND().semitoneDistance))
     assert s.check() == unsat
     s.pop()
     s.push()
-    s.add(l[-1] == 0)
+    s.add(l[-1] == ConstPitch(Interval.FOURTH().semitoneDistance))
     assert s.check() == unsat
     s.pop()
     s.push()
-    s.add(l[-1] == 6)
+    s.add(l[-1] == ConstPitch(Interval.SIXTH().semitoneDistance))
     assert s.check() == unsat
     s.pop()
     s.push()
-    s.add(l[-1] == 7)
+    s.add(l[-1] == ConstPitch(Interval.SEVENTH().semitoneDistance))
     assert s.check() == unsat
     s.pop()
     s.push()

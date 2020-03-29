@@ -5,7 +5,6 @@ from src.species.universal import *
 from src.types import *
 
 def defineThirdSpecies(cantusFirmus: List[int], name, gamutLength):
-    tonicIndex = cantusFirmus[0]
     length = len(cantusFirmus) * 4
 
     # Really should be dep injected
@@ -15,10 +14,11 @@ def defineThirdSpecies(cantusFirmus: List[int], name, gamutLength):
                     makeTemporalisedLine(line, NoteLength.QUARTER))
 
     constraints = And(
-        universalRequirements(length, tonicIndex, gamutLength, opt, line),
-        firstNoteAccompaniesCantusTonic(tonicIndex, line),
+        universalRequirements(gamutLength, opt, line),
+        firstNoteAccompaniesCantusTonic(line),
         unisonOnlyBeginningAndEnd(sm),
-        unaccentedPassingNotesMayBeDissonant(sm),
+        noDissonantIntervals(sm),
+        # unaccentedPassingNotesMayBeDissonant(sm),
         avoidsDissonance(opt, sm)
     )
     opt.add(constraints)
