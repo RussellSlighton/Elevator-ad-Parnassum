@@ -1,6 +1,6 @@
 import pytest
 
-from src.constraints.beginning import *
+from src.formulae.beginning import *
 
 @pytest.fixture
 def s():

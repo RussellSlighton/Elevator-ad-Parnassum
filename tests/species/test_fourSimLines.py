@@ -2,5 +2,5 @@ from src.species.fourSimLines import *
 
 def test_make_four_sim_lines():
     opt, line = defineFourSimLines([VarPitch("")], [VarPitch("")], [VarPitch(""), VarPitch("")], "name", 8)
-    assert len(opt.assertions()) > len(Optimize().assertions()), "Means that the optimiser has some constraints"
+    assert len(opt.assertions()) > len(Optimize().assertions()), "Means that the optimiser has some formulae"
     assert len(line) == 4

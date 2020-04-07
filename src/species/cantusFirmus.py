@@ -1,6 +1,6 @@
 from z3 import *
 
-from src.constraints import *
+from src.formulae import *
 from src.species.universal import universalRequirements
 from src.types import *
 

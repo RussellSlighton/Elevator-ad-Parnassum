@@ -1,6 +1,6 @@
 from z3 import *
 
-from src.constraints import *
+from src.formulae import *
 
 def universalRequirements(gamutLength, opt, line):
     return And(pitchesWithinGamut(0, gamutLength, line),

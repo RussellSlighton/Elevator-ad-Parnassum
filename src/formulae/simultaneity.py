@@ -1,5 +1,5 @@
-from src.constraints._optimisationHelper import *
-from src.constraints.pitch import *
+from src.formulae._optimisationHelper import *
+from src.formulae.pitch import *
 from src.types import *
 
 def unisonOnlyBeginningAndEnd(sm: SimMap):

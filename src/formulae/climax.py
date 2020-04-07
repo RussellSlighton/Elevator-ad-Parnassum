@@ -1,4 +1,4 @@
-from src.constraints.pitch import *
+from src.formulae.pitch import *
 from src.types import *
 
 def hasClimaxPitch(line: Line):
