@@ -28,7 +28,7 @@ def test_constructor(c, logic, descr):
     assert c.formula == logic
 
 def test_inv_constructs(c, logic, descr):
-    assert c.inv().purpose == "inverse of " + descr
+    assert c.inv().description == "inverse of " + descr
     assert c.inv().formula == Not(logic)
 
 def test_inv_isSatisfiable(c):
