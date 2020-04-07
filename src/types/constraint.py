@@ -1,16 +1,13 @@
 # TODO: Write and test this
-from z3 import ExprRef, Optimize
+from z3 import ExprRef, Optimize, Not
 
 class Constraint:
-    def __init__(self, formula: ExprRef, purpose: str):
+    def __init__(self, formula: ExprRef, description: str):
         self.formula = formula
-        self.purpose = purpose
-
-    def apply(self, opt: Optimize):
-        opt.add(self.formula)
-
-    def applyWithTracking(self, opt: Optimize):
-        opt.assert_and_track(self.formula, self.purpose)
+        self.description = description
 
     def __repr__(self):
-        return str("|" + self.purpose + "|")
+        return str("|" + self.description + "|")
+
+    def inv(self):
+        return Constraint(Not(self.formula), "inverse of " + self.description)

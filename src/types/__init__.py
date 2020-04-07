@@ -6,3 +6,4 @@ from src.types.pitch import Pitch, VarPitch, ConstPitch
 from src.types.simMap import SimMap, makeSimMap
 from src.types.temporalisedLine import getPitches, getNoteLength, makeTemporalisedLine, TemporalisedLine
 from src.types.z3Utils import logicalAbs, findDifferent
+from src.types.speciesForge import SpeciesForge
