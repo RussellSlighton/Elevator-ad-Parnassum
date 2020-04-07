@@ -9,6 +9,6 @@ def universalRequirements(gamutLength, opt, line):
                # maximiseSteps(opt, line),
                maximisesUniquePitchCount(0, gamutLength, opt, line),
                conclusionSteps(line),
-               hasClimaxPitch(line),
+               hasClimaxPitch(line).formula,
                conclusionIsInTriad(line)
                )
