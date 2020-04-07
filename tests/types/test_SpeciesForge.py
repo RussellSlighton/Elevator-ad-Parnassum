@@ -1,7 +1,7 @@
 from pytest import fixture
 from z3 import *
 
-from src.types import SpeciesForge, Constraint, ConstPitch, VarPitch
+from src.types import SpeciesForge, Constraint, ConstPitch, VarPitch, ConstraintType
 
 @fixture
 def opt():
@@ -21,7 +21,7 @@ def logic():
 
 @fixture
 def constraint(logic, descr):
-    return Constraint(logic, descr)
+    return Constraint(logic, ConstraintType.MISC, descr)
 
 def testForgeConstructor(forge, opt):
     assert forge.opt == opt
@@ -65,6 +65,6 @@ def testForgeWithMixedTracking(forge, constraint):
 def testExtractPitches(forge):
     p0 = VarPitch('x')
     p1 = ConstPitch(4)
-    forge.addConstraint(Constraint(p0 == p1, "bla"))
+    forge.addConstraint(Constraint(p0 == p1, ConstraintType.MISC, "bla"))
     assert forge.extractPitch(p0) == p1.flattened()
 

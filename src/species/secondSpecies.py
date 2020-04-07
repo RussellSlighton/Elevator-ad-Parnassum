@@ -14,7 +14,7 @@ def defineSecondSpecies(cantusFirmus: List[int], name, gamutLength):
 
     constraints = And(
         universalRequirements(gamutLength, opt, line),
-        firstNoteAccompaniesCantusTonic(line),
+        firstNoteAccompaniesCantusTonic(line).formula,
         unisonOnlyBeginningAndEnd(sm),
         noDissonantIntervals(sm),
     )

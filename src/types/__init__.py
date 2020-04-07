@@ -1,4 +1,4 @@
-from src.types.constraint import Constraint
+from src.types.constraint import Constraint, ConstraintType
 from src.types.interval import Interval
 from src.types.line import Line
 from src.types.noteLength import NoteLength

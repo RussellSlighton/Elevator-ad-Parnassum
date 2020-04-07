@@ -11,7 +11,7 @@ def defineCantusFirmus(length, name, gamutLength):
 
     constraints = And(
         universalRequirements(gamutLength, opt, line),
-        firstNoteIsTonic(line),
+        firstNoteIsTonic(line).formula,
         conclusionIsTonic(line),
         hasClimaxPitch(line),
         climaxMax(line, ConstPitch(int(gamutLength)))

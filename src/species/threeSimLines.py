@@ -14,7 +14,7 @@ def defineThreeSimLines(cantusFirmus, firstSpecies, name, gamutLength):
 
     constraints = And(
         universalRequirements(gamutLength, opt, line),
-        firstNoteAccompaniesCantusTonic(line),
+        firstNoteAccompaniesCantusTonic(line).formula,
         unisonOnlyBeginningAndEnd(sm),
         noDissonantIntervals(sm),
     )

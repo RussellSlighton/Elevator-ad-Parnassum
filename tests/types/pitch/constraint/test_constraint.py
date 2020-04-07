@@ -1,6 +1,7 @@
 from pytest import fixture
 from z3 import *
 
+from src.types import ConstraintType
 from src.types.constraint import Constraint
 
 @fixture
@@ -17,7 +18,7 @@ def descr():
 
 @fixture
 def c(logic, descr):
-    return Constraint(logic, descr)
+    return Constraint(logic, ConstraintType.MISC, descr)
 
 @fixture
 def opt():
@@ -41,3 +42,4 @@ def test_inv_isInverse(c):
     opt.add(c.inv().formula)
     opt.add(c.formula)
     assert opt.check() == unsat
+
