@@ -1,6 +1,8 @@
+from typing import Iterable
+
 from src.types.pitch.varPitch import VarPitch
 
-class Line:
+class Line(Iterable):
     def __init__(self, lineLength: int, name: str):
         self.lineLength = lineLength
         self.name = name

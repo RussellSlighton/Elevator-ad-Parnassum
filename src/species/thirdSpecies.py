@@ -1,10 +1,8 @@
-from typing import List
-
 from src.constraints.beginning import *
 from src.species.universal import *
 from src.types import *
 
-def defineThirdSpecies(cantusFirmus: List[int], name, gamutLength):
+def defineThirdSpecies(cantusFirmus: Line, name, gamutLength):
     length = len(cantusFirmus) * 4
 
     # Really should be dep injected

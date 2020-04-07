@@ -1,7 +1,7 @@
+from pytest import fixture
 from z3 import *
 
 from src.types.constraint import Constraint
-from pytest import fixture
 
 @fixture
 def var():
@@ -10,9 +10,11 @@ def var():
 @fixture
 def logic(var):
     return var == 1
+
 @fixture
 def descr():
     return 'must be 1'
+
 @fixture
 def c(logic, descr):
     return Constraint(logic, descr)
@@ -34,7 +36,7 @@ def test_apply_constrains(opt, c):
     opt.add(Not(c.formula))
     assert opt.check() == unsat
 
-def test_apply_doesNotTrack(opt,c):
+def test_apply_doesNotTrack(opt, c):
     c.apply(opt)
     opt.add(Not(c.formula))
     opt.check()
@@ -50,7 +52,7 @@ def test_applyWithTracking_constrains(opt, c):
     opt.add(Not(c.formula))
     assert opt.check() == unsat
 
-def test_applyWithTracking_doesTrack(opt,c):
+def test_applyWithTracking_doesTrack(opt, c):
     c.applyWithTracking(opt)
     opt.add(Not(c.formula))
     opt.check()

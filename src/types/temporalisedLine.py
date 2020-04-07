@@ -2,12 +2,12 @@ from typing import *
 
 from src.types.noteLength import NoteLength
 
-TemporalisedLine = Tuple[List[Any], NoteLength]
+TemporalisedLine = Tuple[Iterable, NoteLength]
 
-def makeTemporalisedLine(line: List[Any], noteLength: NoteLength) -> TemporalisedLine:
+def makeTemporalisedLine(line: Iterable, noteLength: NoteLength) -> TemporalisedLine:
     return (line, noteLength)
 
-def getPitches(tl: TemporalisedLine) -> List[Any]:
+def getPitches(tl: TemporalisedLine) -> Iterable:
     return tl[0]
 
 def getNoteLength(tl: TemporalisedLine) -> NoteLength:

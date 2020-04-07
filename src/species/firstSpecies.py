@@ -1,10 +1,8 @@
-from typing import List
-
 from src.constraints.beginning import *
 from src.species.universal import *
 from src.types import *
 
-def defineFirstSpecies(cantusFirmus: List[int], name, gamutLength):
+def defineFirstSpecies(cantusFirmus: Line, name, gamutLength):
     tonicIndex = cantusFirmus[0]
     length = len(cantusFirmus)
 
