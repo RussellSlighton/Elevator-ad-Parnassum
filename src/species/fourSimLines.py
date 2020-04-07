@@ -15,9 +15,9 @@ def defineFourSimLines(cantusFirmus, firstSpecies, secondSpecies, name, gamutLen
     constraints = And(
         universalRequirements(gamutLength, opt, line),
         firstNoteAccompaniesCantusTonic(line).formula,
-        unisonOnlyBeginningAndEnd(sm),
-        noDissonantIntervals(sm),
-        avoidsDissonance(opt, sm)
+        unisonOnlyBeginningAndEnd(sm).formula,
+        noDissonantIntervals(sm).formula,
+        #avoidsDissonance(opt, sm)
     )
     opt.add(constraints)
     return opt, line

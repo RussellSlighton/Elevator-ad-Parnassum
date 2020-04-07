@@ -3,12 +3,12 @@ from z3 import *
 from src.constraints import *
 
 def universalRequirements(gamutLength, opt, line):
-    return And(pitchesWithinGamut(0, gamutLength, line),
-               pitchesOnScale(line),
-               minimiseLeaps(opt, line),
+    return And(pitchesWithinGamut(0, gamutLength, line).formula,
+               pitchesOnScale(line).formula,
+               #minimiseLeaps(opt, line),
                # maximiseSteps(opt, line),
-               maximisesUniquePitchCount(0, gamutLength, opt, line),
-               conclusionSteps(line),
+               #uniquePitchCounts(0, gamutLength, line),
+               conclusionSteps(line).formula,
                hasClimaxPitch(line).formula,
-               conclusionIsInTriad(line)
+               conclusionIsInTriad(line).formula
                )

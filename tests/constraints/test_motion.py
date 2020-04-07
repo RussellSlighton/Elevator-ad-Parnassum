@@ -1,6 +1,8 @@
 import pytest
+from z3 import *
 
 from src.constraints.motion import *
+from src.types import *
 
 @pytest.fixture
 def l():
@@ -11,12 +13,14 @@ def s():
     return Optimize()
 
 def test_maximiseSteps_leaps_still_possible(s, l):
-    s.add(maximiseSteps(s, l))
+    count = sum([If(ind, 1, 0) for ind in steps(l)])
+    s.maximize(count)
     s.add(l[0] == ConstPitch(0), l[1] == ConstPitch(10))
     assert s.check() == sat
 
 def test_maximiseSteps_stepsByDefault(s, l):
-    s.add(maximiseSteps(s, l))
+    count = sum([If(ind, 1, 0) for ind in steps(l)])
+    s.maximize(count)
     assert s.check() == sat
     ps = [s.model()[p.letter].as_long() + 12 * s.model()[p.octave].as_long() for p in l]
     print(ps)
@@ -24,11 +28,13 @@ def test_maximiseSteps_stepsByDefault(s, l):
         assert abs(ps[i] - ps[i + 1]) <= 2
 
 def test_minimiseLeaps_steps_still_possible(s, l):
-    s.add(minimiseLeaps(s, l))
+    count = sum([If(ind, 1, 0) for ind in leaps(l)])
+    s.minimize(count)
     s.add(l[0] == ConstPitch(0), l[1] == ConstPitch(1))
     assert s.check() == sat
 
 def test_minimiseLeaps_skips_still_possible(s, l):
-    s.add(minimiseLeaps(s, l))
+    count = sum([If(ind, 1, 0) for ind in leaps(l)])
+    s.minimize(count)
     s.add(l[0] == ConstPitch(0), l[1] == ConstPitch(4))
     assert s.check() == sat

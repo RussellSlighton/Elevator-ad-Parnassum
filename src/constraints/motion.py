@@ -1,13 +1,8 @@
-from src.constraints._optimisationHelper import *
-from src.constraints.pitch import *
-from src.types import *
+from src.constraints.pitch import isStep, isLeap
+from src.types import Line
 
-def maximiseSteps(opt: Optimize, line: Line):
-    stepInds = [isStep(line[i], line[i + 1]) for i in range(0, len(line) - 1)]
-    maximise(opt, stepInds)
-    return True
+def steps(line: Line):
+    return [isStep(line[i], line[i + 1]) for i in range(0, len(line) - 1)]
 
-def minimiseLeaps(opt: Optimize, line: Line):
-    leapInds = [isLeap(line[i], line[i + 1]) for i in range(0, len(line) - 1)]
-    minimise(opt, leapInds)
-    return True
+def leaps(line: Line):
+    return [isLeap(line[i], line[i + 1]) for i in range(0, len(line) - 1)]

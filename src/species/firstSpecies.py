@@ -15,8 +15,8 @@ def defineFirstSpecies(cantusFirmus: Line, name, gamutLength):
     constraints = And(
         universalRequirements(gamutLength, opt, line),
         firstNoteAccompaniesCantusTonic(line).formula,
-        unisonOnlyBeginningAndEnd(sm),
-        noDissonantIntervals(sm),
+        unisonOnlyBeginningAndEnd(sm).formula,
+        noDissonantIntervals(sm).formula,
     )
     opt.add(constraints)
     return opt, line

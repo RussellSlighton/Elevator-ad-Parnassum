@@ -14,10 +14,10 @@ def defineThirdSpecies(cantusFirmus: Line, name, gamutLength):
     constraints = And(
         universalRequirements(gamutLength, opt, line),
         firstNoteAccompaniesCantusTonic(line).formula,
-        unisonOnlyBeginningAndEnd(sm),
-        noDissonantIntervals(sm),
+        unisonOnlyBeginningAndEnd(sm).formula,
+        noDissonantIntervals(sm).formula,
         # unaccentedPassingNotesMayBeDissonant(sm),
-        avoidsDissonance(opt, sm)
+        #avoidsDissonance(opt, sm)
     )
     opt.add(constraints)
     return opt, line
