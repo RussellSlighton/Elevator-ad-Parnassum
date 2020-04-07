@@ -1,4 +1,4 @@
-from src.constraints.beginning import firstNoteIsTonic
+from src.constraints.beginning import firstNoteIsTonic, firstNoteAccompaniesCantusTonic
 from src.constraints.climax import hasClimaxPitch, climaxMax
 from src.constraints.conclusion import conclusionSteps, conclusionIsTonicOrOctave, conclusionIsTonic, \
     conclusionIsInTriad

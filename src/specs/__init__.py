@@ -1,0 +1,1 @@
+from src.specs.specGenerator import cantusSpec, firstSpeciesSpec, secondSpeciesSpec, thirdSpeciesSpec
