@@ -11,8 +11,8 @@ def test_find_different():
     xs = [x]
     s = Solver()
     s.add(Or(x == 1, x == 2))
-    assert s.check() == sat, "formulae should be sat at first"
+    assert s.check() == sat, "formula should be sat at first"
     findDifferent(xs, s)
-    assert s.check() == sat, "formulae should be sat after one solve"
+    assert s.check() == sat, "formula should be sat after one solve"
     findDifferent(xs, s)
-    assert s.check() == unsat, "formulae should be unsat after two solves"
+    assert s.check() == unsat, "formula should be unsat after two solves"

@@ -1,4 +1,4 @@
-from src.formulae.beginning import *
+from src.constraints.beginning import *
 from src.species.universal import *
 from src.types import *
 

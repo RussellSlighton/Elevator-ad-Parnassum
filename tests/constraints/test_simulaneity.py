@@ -1,6 +1,6 @@
 import pytest
 
-from src.formulae.simultaneity import *
+from src.constraints.simultaneity import *
 
 @pytest.fixture
 def s():

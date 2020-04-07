@@ -1,6 +1,6 @@
 import pytest
 
-from src.formulae.motion import *
+from src.constraints.motion import *
 
 @pytest.fixture
 def l():

@@ -1,4 +1,4 @@
-from src.formulae.pitch import *
+from src.constraints.pitch import *
 from src.types import *
 
 def firstNoteIsTonic(line: Line):

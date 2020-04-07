@@ -1,4 +1,4 @@
-from src.formulae.pitch import *
+from src.constraints.pitch import *
 from src.types import *
 
 # Conclusion must be re-do or ti-do

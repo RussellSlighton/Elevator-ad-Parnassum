@@ -1,4 +1,4 @@
-from src.formulae._optimisationHelper import *
+from src.constraints._optimisationHelper import *
 
 def test_maximise():
     opt = Optimize()

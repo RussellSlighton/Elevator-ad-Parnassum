@@ -1,6 +1,6 @@
 import pytest
 
-from src.formulae.pitch import *
+from src.constraints.pitch import *
 from src.types import ConstPitch
 
 def run2(function, arg1, arg2):

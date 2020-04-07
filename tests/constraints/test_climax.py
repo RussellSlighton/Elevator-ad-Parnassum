@@ -1,6 +1,6 @@
 import pytest
 
-from src.formulae.climax import *
+from src.constraints.climax import *
 
 @pytest.fixture
 def s():

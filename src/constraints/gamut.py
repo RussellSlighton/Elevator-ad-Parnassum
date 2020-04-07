@@ -1,6 +1,6 @@
 from z3 import *
 
-from src.formulae._optimisationHelper import maximise
+from src.constraints._optimisationHelper import maximise
 from src.types import *
 
 def pitchesWithinGamut(gamutMin: int, gamutMax: int, line: Line):

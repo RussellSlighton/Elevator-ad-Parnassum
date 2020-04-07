@@ -1,6 +1,6 @@
 import pytest
 
-from src.formulae.gamut import *
+from src.constraints.gamut import *
 
 @pytest.fixture
 def l():
