@@ -65,7 +65,6 @@ class Foundry:
         return [str(x) for x in self.opt.unsat_core()]
 
     def getModel(self):
-        self.check()
         return self.opt.model()
 
     def extractPitch(self, pitch : Pitch):
@@ -75,4 +74,5 @@ class Foundry:
 
     def extractPitches(self, line : Line):
         self.check()
+        print(self.opt.model())
         return [self.extractPitch(p) for p in line]

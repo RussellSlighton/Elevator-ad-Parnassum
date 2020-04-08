@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from src.generator.gui import GUI
+from src.generator.gui import Creator
 
 @fixture
 def goodLength():
@@ -16,7 +16,7 @@ def badGamut():
 
 @fixture
 def gui():
-    return GUI()
+    return Creator()
 
 @fixture
 def cf(goodLength):

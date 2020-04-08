@@ -66,10 +66,11 @@ def testFoundryWithMixedTracking(foundry, constraint):
     assert len(foundry.getReasonsForUnsat()) == 1
     assert foundry.getReasonsForUnsat()[0] == str(constraint.constraintType) + ": " + constraint.inv().description
 
-def testExtractPitche(foundry):
+def testExtractPitch(foundry):
     p0 = VarPitch('x')
     p1 = ConstPitch(4)
     foundry.apply(Constraint(p0 == p1, ConstraintType.MISC, "bla"))
+    foundry.check()
     assert foundry.extractPitch(p0) == p1.flattened()
 
 def testExtractPitches(foundry):

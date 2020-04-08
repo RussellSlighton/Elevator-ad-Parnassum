@@ -38,3 +38,15 @@ def test_minimiseLeaps_skips_still_possible(s, l):
     s.minimize(count)
     s.add(l[0] == ConstPitch(0), l[1] == ConstPitch(4))
     assert s.check() == sat
+
+def test_minimiseSkips_steps_still_possible(s, l):
+    count = sum([If(ind, 1, 0) for ind in steps(l)])
+    s.minimize(count)
+    s.add(l[0] == ConstPitch(0), l[1] == ConstPitch(1))
+    assert s.check() == sat
+
+def test_minimiseSkips_Leaps_still_possible(s, l):
+    count = sum([If(ind, 1, 0) for ind in steps(l)])
+    s.minimize(count)
+    s.add(l[0] == ConstPitch(0), l[1] == ConstPitch(9))
+    assert s.check() == sat

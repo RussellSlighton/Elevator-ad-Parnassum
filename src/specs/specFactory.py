@@ -10,7 +10,7 @@ def __universalConstraints(gamutLength, line):
         conclusionIsInTriad(line),
     ]
 def __universalMaximisations(gamutLength, line):
-    return [uniquePitchCounts(0, gamutLength, line)]
+    return [uniquePitchCounts(0, gamutLength, line), steps(line)]
 
 def __universalMinimisations(line):
     return [leaps(line)]
@@ -27,7 +27,6 @@ def cantusSpec(length, gamutLength, name):
     spec.constraints +=[
         firstNoteIsTonic(line),
         conclusionIsTonic(line),
-        climaxMax(line, ConstPitch(int(gamutLength)))
     ]
 
     return spec

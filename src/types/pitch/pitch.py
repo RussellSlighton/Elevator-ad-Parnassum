@@ -6,7 +6,7 @@ class Pitch:
         self.octave = octave
 
     def flattened(self):
-        return self.letter + self.octave * 12
+        return self.letter + 12 * self.octave
 
     def __eq__(self, other: Pitch):
         return self.flattened() == other.flattened()
