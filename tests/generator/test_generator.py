@@ -5,14 +5,14 @@ from src.specs import cantusSpec
 
 @fixture
 def length():
-    return 5
+    return 4
 @fixture
 def cfGen1(length):
-    return Generator(cantusSpec(length,10, ''))
+    return Generator(cantusSpec(length,13, ''))
 
 @fixture
-def impossible():
-    return Generator(cantusSpec(5,1,''))
+def impossible(length):
+    return Generator(cantusSpec(length,1,''))
 
 def test_createNewCreates(cfGen1, length):
     assert len(cfGen1.createNew()) == length
