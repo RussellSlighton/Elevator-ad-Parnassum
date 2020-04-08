@@ -1,1 +1,1 @@
-from src.specs.specGenerator import cantusSpec, firstSpeciesSpec, secondSpeciesSpec, thirdSpeciesSpec
+from src.specs.specFactory import cantusSpec, firstSpeciesSpec, secondSpeciesSpec, thirdSpeciesSpec

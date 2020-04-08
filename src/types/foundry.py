@@ -2,11 +2,12 @@ from typing import List
 
 from z3 import *
 
+from src.types import Line
 from src.types.spec import Spec
 from src.types.constraint import *
 from src.types.pitch import ConstPitch, Pitch
 
-class SpeciesForge:
+class Foundry:
 
     def __init__(self, opt : Optimize):
         self.opt = opt
@@ -31,8 +32,21 @@ class SpeciesForge:
         self.opt.add(constraint.formula)
         return self
 
+    def applyAll(self, constraints : List[Constraint]):
+        for c in constraints:
+            self.apply(c)
+        return self
+
     def applyAndTrack(self, constraint : Constraint):
-        self.opt.assert_and_track(constraint.formula, str(constraint.constraintType) + ": " + constraint.description)
+        self.opt.assert_and_track(
+            constraint.formula,
+            str(constraint.constraintType) + ": " + constraint.description
+        )
+        return self
+
+    def applyAndTrackAll(self, constraints : List[Constraint]):
+        for c in constraints:
+            self.applyAndTrack(c)
         return self
 
     def maximise(self, indicators) -> None:
@@ -55,8 +69,10 @@ class SpeciesForge:
         return self.opt.model()
 
     def extractPitch(self, pitch : Pitch):
-        self.check()
-
         letter = self.getModel()[pitch.letter].as_long()
         octave = self.getModel()[pitch.octave].as_long()
         return ConstPitch(letter, octave).flattened()
+
+    def extractPitches(self, line : Line):
+        self.check()
+        return [self.extractPitch(p) for p in line]

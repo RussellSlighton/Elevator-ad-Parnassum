@@ -18,7 +18,7 @@ def maxi():
 
 @fixture
 def spec(cons, mini, maxi):
-    return Spec(cons, maxi, mini)
+    return Spec(Line(1,''), cons, maxi, mini)
 
 def test_specConstruction(spec, cons, mini, maxi):
     assert spec.constraints == cons

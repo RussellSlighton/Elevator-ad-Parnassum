@@ -9,3 +9,4 @@ from src.constraints.pitch import isIntervalOrSmaller, isIntervalOrLarger, isSte
     isMotionUp, isMotionDown
 from src.constraints.simultaneity import unisonOnlyBeginningAndEnd, noDissonantIntervals, fourths, \
     unaccentedPassingNotesMayBeDissonant, dissonances
+from src.constraints.distinctness import distinctFromExample
