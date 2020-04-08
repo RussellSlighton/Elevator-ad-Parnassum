@@ -1,4 +1,4 @@
-from src.types.line import *
+from src.types2.line import *
 
 def test_line():
     l = Line(1, "L")

@@ -1,6 +1,6 @@
 import pytest
 
-from src.types.temporalisedLine import *
+from src.types2.temporalisedLine import *
 
 @pytest.fixture
 def tl():

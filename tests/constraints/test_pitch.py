@@ -1,7 +1,7 @@
 import pytest
 
 from src.constraints.pitch import *
-from src.types import ConstPitch
+from src.types2 import ConstPitch
 
 def run2(function, arg1, arg2):
     s = Solver()

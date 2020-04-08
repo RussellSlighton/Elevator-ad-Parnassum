@@ -3,8 +3,8 @@ from typing import List
 from synthesizer import Player, Synthesizer, Waveform
 
 from src.player.equalTemperamentSynth import *
-from src.types import *
-from src.types.temporalisedLine import asUniqueValues
+from src.types2 import *
+from src.types2.temporalisedLine import asUniqueValues
 
 def playPiece(lines: List[TemporalisedLine]):
     mapping, indexLines = asUniqueValues(lines)

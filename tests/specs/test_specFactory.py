@@ -2,7 +2,7 @@ from pytest import fixture
 from z3 import Optimize, sat
 
 from src.specs import *
-from src.types import Spec, Line
+from src.types2 import Spec, Line
 
 @fixture
 def length():

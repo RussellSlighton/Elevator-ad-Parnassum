@@ -1,5 +1,5 @@
 from src.constraints.pitch import *
-from src.types import *
+from src.types2 import *
 
 def firstNoteIsTonic(line: Line) -> Constraint:
     return Constraint(isUnison(ConstPitch(0), line[0]), ConstraintType.BEGINNING, "First note should be the tonic")

@@ -1,6 +1,6 @@
 from z3 import Int
 
-from src.types.pitch.pitch import Pitch
+from src.types2.pitch.pitch import Pitch
 
 class VarPitch(Pitch):
     def __init__(self, name: str):

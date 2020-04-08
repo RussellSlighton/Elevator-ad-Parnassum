@@ -2,7 +2,7 @@ from pytest import fixture
 from z3 import Int
 
 from src.specs import *
-from src.types import *
+from src.types2 import *
 
 @fixture
 def cons():

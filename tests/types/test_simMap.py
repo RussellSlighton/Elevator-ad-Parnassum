@@ -1,6 +1,6 @@
 import pytest
 
-from src.types.simMap import *
+from src.types2.simMap import *
 
 @pytest.fixture
 def cf():

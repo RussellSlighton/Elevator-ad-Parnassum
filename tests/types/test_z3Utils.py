@@ -1,6 +1,6 @@
 from z3 import *
 
-from src.types.z3Utils import *
+from src.types2.z3Utils import *
 
 def test_abs():
     x = 1

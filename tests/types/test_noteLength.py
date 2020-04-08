@@ -1,4 +1,4 @@
-from src.types.noteLength import NoteLength
+from src.types2.noteLength import NoteLength
 
 def testNoteLengthActsLikeNum():
     assert NoteLength.WHOLE + NoteLength.WHOLE == NoteLength.HALF, "NoteLength should act like an int"

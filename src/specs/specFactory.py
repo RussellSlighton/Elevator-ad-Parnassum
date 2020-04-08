@@ -1,5 +1,5 @@
 from src.constraints import *
-from src.types import *
+from src.types2 import *
 
 def __universalConstraints(gamutLength, line):
      return [

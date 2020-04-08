@@ -1,5 +1,5 @@
 from src.constraints.pitch import isStep, isLeap, isSkip
-from src.types import Line
+from src.types2 import Line
 
 def steps(line: Line):
     return [isStep(line[i], line[i + 1]) for i in range(0, len(line) - 1)]

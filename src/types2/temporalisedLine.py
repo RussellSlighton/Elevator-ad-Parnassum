@@ -1,6 +1,6 @@
 from typing import *
 
-from src.types.noteLength import NoteLength
+from src.types2.noteLength import NoteLength
 
 TemporalisedLine = Tuple[Iterable, NoteLength]
 

@@ -1,6 +1,6 @@
 from z3 import Or
 
-from src.types import Line, Constraint, ConstraintType
+from src.types2 import Line, Constraint, ConstraintType
 
 def distinctFromExample(line: Line, prevExample) -> Constraint:
     assert len(prevExample) == len(line)

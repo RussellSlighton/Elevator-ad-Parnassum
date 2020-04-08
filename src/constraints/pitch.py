@@ -1,7 +1,7 @@
 from z3 import *
 
-from src.types import Pitch, ConstPitch
-from src.types.interval import Interval
+from src.types2 import Pitch, ConstPitch
+from src.types2.interval import Interval
 
 # Note, only works upwards - C:G is a fifth, not a third.
 def isNthInterval(n: Interval, n1: Pitch, n2: Pitch):

@@ -1,6 +1,6 @@
 import math
 
-from src.types.pitch.pitch import Pitch
+from src.types2.pitch.pitch import Pitch
 
 maxLetter = 12
 

@@ -1,5 +1,5 @@
 from src.constraints.pitch import *
-from src.types import *
+from src.types2 import *
 
 def hasClimaxPitch(line: Line) -> Constraint:
     climaxPitch = VarPitch(line.name + "_CP")

@@ -2,10 +2,10 @@ from typing import List
 
 from z3 import *
 
-from src.types import Line
-from src.types.spec import Spec
-from src.types.constraint import *
-from src.types.pitch import ConstPitch, Pitch
+from src.types2 import Line
+from src.types2.spec import Spec
+from src.types2.constraint import *
+from src.types2.pitch import ConstPitch, Pitch
 
 class Foundry:
 

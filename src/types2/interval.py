@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from src.types.pitch.pitch import Pitch
-from src.types.z3Utils import logicalAbs
+from src.types2.pitch.pitch import Pitch
+from src.types2.z3Utils import logicalAbs
 
 class Interval:
     def __init__(self, semitoneDistance: int):

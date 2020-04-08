@@ -1,8 +1,8 @@
 from pytest import fixture
 from z3 import *
 
-from src.types import ConstraintType
-from src.types.constraint import Constraint
+from src.types2 import ConstraintType
+from src.types2.constraint import Constraint
 
 @fixture
 def var():

@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QHB
 from src import playVoice, playPiece
 from src.generator import Generator
 from src.specs import *
-from src.types import ConstPitch, makeTemporalisedLine, NoteLength
+from src.types2 import ConstPitch, makeTemporalisedLine, NoteLength
 
 class GUI:
     def __init__(self):

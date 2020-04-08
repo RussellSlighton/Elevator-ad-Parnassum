@@ -2,7 +2,7 @@ from pytest import fixture
 from z3 import Optimize, sat, unsat
 
 from src.constraints import distinctFromExample
-from src.types import Line, ConstPitch
+from src.types2 import Line, ConstPitch
 
 @fixture
 def example():

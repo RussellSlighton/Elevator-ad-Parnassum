@@ -1,6 +1,6 @@
 # Simultaneity register - tells when two notes occur at the same time
 
-from src.types.temporalisedLine import *
+from src.types2.temporalisedLine import *
 
 # TODO: Replace this structure with more sane varient - just return a set...
 # Also, refactor out the slotting functionality to a slotmap.

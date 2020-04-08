@@ -2,7 +2,7 @@ import pytest
 from z3 import *
 
 from src.constraints.motion import *
-from src.types import *
+from src.types2 import *
 
 @pytest.fixture
 def l():

@@ -1,4 +1,4 @@
-from src.types import ConstPitch
+from src.types2 import ConstPitch
 
 def test_twoArgConstructorWorks():
     p = ConstPitch(1, 2)

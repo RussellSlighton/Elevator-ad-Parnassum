@@ -1,7 +1,7 @@
 from pytest import fixture
 from z3 import *
 
-from src.types import Foundry, Constraint, ConstPitch, VarPitch, ConstraintType, Spec, Line
+from src.types2 import Foundry, Constraint, ConstPitch, VarPitch, ConstraintType, Spec, Line
 
 @fixture
 def opt():

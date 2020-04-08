@@ -1,5 +1,5 @@
 from src.constraints.pitch import *
-from src.types import *
+from src.types2 import *
 
 def unisonOnlyBeginningAndEnd(sm: SimMap) -> Constraint:
     # Recall that dict perserves insertion order

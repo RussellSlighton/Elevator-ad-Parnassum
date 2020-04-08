@@ -1,5 +1,5 @@
 from src.constraints.pitch import *
-from src.types import *
+from src.types2 import *
 
 # Conclusion must be re-do or ti-do
 

@@ -1,5 +1,5 @@
 from z3 import *
-from src.types import *
+from src.types2 import *
 
 def pitchesWithinGamut(gamutMin: int, gamutMax: int, line: Line) -> Constraint:
     formula = And([And(ConstPitch(gamutMin) <= p, p < ConstPitch(gamutMax)) for p in line])

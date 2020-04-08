@@ -1,8 +1,8 @@
 from pytest import fixture
 from z3 import If
 
-from src.types.interval import *
-from src.types.pitch.constPitch import ConstPitch
+from src.types2.interval import *
+from src.types2.pitch.constPitch import ConstPitch
 
 @fixture
 def constantPitch():
