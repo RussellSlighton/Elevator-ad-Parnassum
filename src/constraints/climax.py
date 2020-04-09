@@ -3,7 +3,7 @@ from src.types2 import *
 
 def hasClimaxPitch(line: Line) -> Constraint:
     climaxPitch = VarPitch(line.name + "_CP")
-    formula =  And(
+    formula = And(
         __climaxPitchIsHighestPitch(climaxPitch, line),
         isConsonant(ConstPitch(0), climaxPitch),
         __onlyOneNoteIsClimax(climaxPitch, line)
@@ -12,9 +12,8 @@ def hasClimaxPitch(line: Line) -> Constraint:
 
 def climaxMax(line: Line, maxPitch: Pitch) -> Constraint:
     climaxPitch = VarPitch(line.name + "_CP")
-    formula =  Interval.between(climaxPitch, maxPitch) >= Interval.UNISON()
+    formula = Interval.between(climaxPitch, maxPitch) >= Interval.UNISON()
     return Constraint(formula, ConstraintType.CLIMAX, "Climax should be no greater than " + str(maxPitch.flattened()))
-
 
 # TODO: Check if this actually how you say "only one of"
 def __onlyOneNoteIsClimax(climaxPitch: Pitch, line: Line):

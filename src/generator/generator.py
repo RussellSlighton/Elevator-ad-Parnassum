@@ -1,15 +1,11 @@
-from typing import Any, List
-
-import pandas as pd
-from z3 import Or, Optimize
+from z3 import Optimize
 
 from src.constraints import distinctFromExample
-from src.specs import *
-from src.types2 import Constraint, ConstraintType, Line, Foundry, Spec, ConstPitch
+from src.types2 import Foundry, Spec, ConstPitch
 
-#creates new examples of a given spec - species, length, gamutlength ... (all parameters fixed)
+# creates new examples of a given spec - species, length, gamutlength ... (all parameters fixed)
 class Generator():
-    def __init__(self, spec : Spec):
+    def __init__(self, spec: Spec):
         self.foundry = Foundry(Optimize())
         self.foundry.applySpec(spec)
         self.spec = spec

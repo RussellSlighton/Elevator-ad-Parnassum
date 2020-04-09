@@ -2,13 +2,14 @@ from src.constraints import *
 from src.types2 import *
 
 def __universalConstraints(gamutLength, line):
-     return [
+    return [
         pitchesWithinGamut(0, gamutLength, line),
         pitchesOnScale(line),
         conclusionSteps(line),
         hasClimaxPitch(line),
         conclusionIsInTriad(line),
     ]
+
 def __universalMaximisations(gamutLength, line):
     return [uniquePitchCounts(0, gamutLength, line)]
 
@@ -17,14 +18,14 @@ def __universalMinimisations(line):
 
 def __baseLineSpec(gamutLength, line):
     return Spec(line,
-                __universalConstraints(gamutLength,line),
+                __universalConstraints(gamutLength, line),
                 __universalMaximisations(gamutLength, line),
                 __universalMinimisations(line))
 
 def cantusSpec(length, gamutLength, name):
     line = Line(length, "CF_" + name)
-    spec = __baseLineSpec(gamutLength,line)
-    spec.constraints +=[
+    spec = __baseLineSpec(gamutLength, line)
+    spec.constraints += [
         firstNoteIsTonic(line),
         conclusionIsTonic(line),
     ]
@@ -46,7 +47,7 @@ def firstSpeciesSpec(cantusFirmus: Line, gamutLength, name):
 
     return spec
 
-def secondSpeciesSpec(cantusFirmus : Line, gamutLength, name):
+def secondSpeciesSpec(cantusFirmus: Line, gamutLength, name):
     length = len(cantusFirmus) * 2
     line = Line(length, "SecondSpecies_" + name)
     sm = makeSimMap([makeTemporalisedLine(cantusFirmus, NoteLength.WHOLE)],
@@ -75,7 +76,3 @@ def thirdSpeciesSpec(cantusFirmus: Line, gamutLength, name):
     ]
 
     return spec
-
-
-
-
