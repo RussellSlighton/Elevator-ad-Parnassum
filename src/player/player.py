@@ -16,7 +16,7 @@ def playPiece(lines: List[TemporalisedLine]):
 
     player = Player()
     player.open_stream()
-    synthesizer = Synthesizer(osc1_waveform=Waveform.sine, osc1_volume=1.0, use_osc2=False)
+    synthesizer = Synthesizer(osc1_waveform=Waveform.triangle, osc1_volume=1.0, use_osc2=False)
 
     for k in upperLine[0][:-1]:
         toPlay = [synth(mapping[n]) for n in sm[k].union([k])]
@@ -30,7 +30,7 @@ def playPiece(lines: List[TemporalisedLine]):
 def playVoice(notes):
     player = Player()
     player.open_stream()
-    synthesizer = Synthesizer(osc1_waveform=Waveform.sine, osc1_volume=1.0, use_osc2=False)
+    synthesizer = Synthesizer(osc1_waveform=Waveform.triangle, osc1_volume=1.0, use_osc2=False)
 
     for note in notes:
         player.play_wave(synthesizer.generate_constant_wave(synth(note), .5))

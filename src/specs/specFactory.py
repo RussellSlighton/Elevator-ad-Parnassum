@@ -13,7 +13,7 @@ def __universalMaximisations(gamutLength, line):
     return [uniquePitchCounts(0, gamutLength, line)]
 
 def __universalMinimisations(line):
-    return [leaps(line)]
+    return [leaps(line), skips(line)]
 
 def __baseLineSpec(gamutLength, line):
     return Spec(line,
