@@ -10,7 +10,7 @@ def __universalConstraints(gamutLength, line):
         conclusionIsInTriad(line),
     ]
 def __universalMaximisations(gamutLength, line):
-    return [uniquePitchCounts(0, gamutLength, line), steps(line)]
+    return [uniquePitchCounts(0, gamutLength, line)]
 
 def __universalMinimisations(line):
     return [leaps(line)]

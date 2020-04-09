@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QHBoxLayout, QLineEdit, QLabel, QMessageBox
 
 from src import playVoice, playPiece
@@ -7,10 +9,11 @@ from src.types2 import ConstPitch, makeTemporalisedLine, NoteLength
 
 class GUI:
     def __init__(self):
+        print("Generator GUI starting")
         self.creator = Creator()
         self.lastCF = []
 
-        self.app = QApplication([])
+        self.app = QApplication(sys.argv)
         self.app.setApplicationName("SM(Bach)")
         self.window = QWidget()
         self.window.setWindowTitle("SM(Bach)")
@@ -108,6 +111,8 @@ class GUI:
         self.window.setLayout(self.speciesLayout)
         self.window.show()
         self.app.exec_()
+        print("Generator GUI started")
+
 
     def makeCF(self):
         try:

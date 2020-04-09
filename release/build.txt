@@ -1,0 +1,1 @@
+pyinstaller --name="SM(Bach)"  ../src/main.py -D --hidden-import=z3-solver --windowed --add-binary '/usr/local/Cellar/z3/4.8.7/lib/libz3.dylib:.' --icon '../rec/smb.icns'
