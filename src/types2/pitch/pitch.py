@@ -12,6 +12,7 @@ class Pitch:
         return self.flattened() == other.flattened()
 
     def __ne__(self, other):
+
         return self.flattened() != other.flattened()
 
     def __le__(self, other: Pitch):

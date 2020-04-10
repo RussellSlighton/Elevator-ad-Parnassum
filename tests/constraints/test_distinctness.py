@@ -6,15 +6,16 @@ from src.types2 import Line, ConstPitch
 
 @fixture
 def example():
-    return [ConstPitch(1), ConstPitch(2), ConstPitch(3)]
+    return [ConstPitch(1),ConstPitch(2),ConstPitch(3)]
 
 @fixture
 def line():
-    return Line(3, "")
+    return Line(3,"")
 
 @fixture
 def opt():
     return Optimize()
+
 
 def test_distinctnessIsSatisfiable(example, line, opt):
     opt.add(distinctFromExample(line, example).formula)

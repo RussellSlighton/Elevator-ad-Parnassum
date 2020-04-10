@@ -42,3 +42,4 @@ def test_inv_isInverse(c):
     opt.add(c.inv().formula)
     opt.add(c.formula)
     assert opt.check() == unsat
+

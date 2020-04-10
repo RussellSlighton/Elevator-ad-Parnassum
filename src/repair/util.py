@@ -1,8 +1,9 @@
 from typing import List
 
+from z3 import *
+
 from src.species.cantusFirmus import defineCantusFirmus
 from src.species.firstSpecies import defineFirstSpecies
-from z3 import *
 
 def cfSpec(cf: List[int]) -> (Optimize, List[Int]):
     gamutLength = (max(cf) - min(cf)) + 2

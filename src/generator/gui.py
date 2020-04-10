@@ -26,7 +26,7 @@ class GUI:
         self.cfLayout.addWidget(self.cfInfo)
 
         self.cfButton = QPushButton('Create new Cantus Firmus', self.window)
-        self.cfButton.clicked.connect(lambda: self.makeCF())
+        self.cfButton.clicked.connect(lambda : self.makeCF())
         self.cfLayout.addWidget(self.cfButton)
 
         self.cfLengthLabel = QLabel("Number of notes")
@@ -45,7 +45,7 @@ class GUI:
 
         self.s1Layout = QVBoxLayout()
         self.s1Button = QPushButton('Create new first species (using last CF)', self.window)
-        self.s1Button.clicked.connect(lambda: self.makeS1())
+        self.s1Button.clicked.connect(lambda : self.makeS1())
         self.s1Layout.addWidget(self.s1Button)
 
         self.s1LengthLabel = QLabel("Number of notes")
@@ -64,7 +64,7 @@ class GUI:
 
         self.s2Layout = QVBoxLayout()
         self.s2Button = QPushButton('Create new second species (using last CF)', self.window)
-        self.s2Button.clicked.connect(lambda: self.makeS2())
+        self.s2Button.clicked.connect(lambda : self.makeS2())
         self.s2Layout.addWidget(self.s2Button)
 
         self.s2LengthLabel = QLabel("Number of notes")
@@ -86,7 +86,7 @@ class GUI:
         self.s3Layout.addWidget(self.s3Warning)
 
         self.s3Button = QPushButton('Create new third species (using last CF)', self.window)
-        self.s3Button.clicked.connect(lambda: self.makeS3())
+        self.s3Button.clicked.connect(lambda : self.makeS3())
         self.s3Layout.addWidget(self.s3Button)
 
         self.s3LengthLabel = QLabel("Number of notes")
@@ -112,6 +112,7 @@ class GUI:
         self.window.show()
         self.app.exec_()
         print("Generator GUI started")
+
 
     def makeCF(self):
         try:
@@ -157,7 +158,7 @@ class GUI:
             m = QMessageBox()
             m.setText("Nothing could be composed - try another pair of numbers or create a new CF");
             m.exec_()
-
+        
     def makeS3(self):
         try:
             length = int(self.s3LengthTextBox.text())
@@ -197,6 +198,7 @@ class Creator:
 
             self.generators[key] = g
             return g.createNew()
+
 
 if __name__ == "__main__":
     gui = GUI()

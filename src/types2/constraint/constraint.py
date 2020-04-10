@@ -3,7 +3,7 @@ from z3 import ExprRef, Not
 from src.types2.constraint.constraintType import ConstraintType
 
 class Constraint:
-    def __init__(self, formula: ExprRef, constraintType: ConstraintType, description: str):
+    def __init__(self, formula: ExprRef, constraintType : ConstraintType, description: str):
         self.formula = formula
         self.constraintType = constraintType
         self.description = description

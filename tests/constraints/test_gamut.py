@@ -29,7 +29,7 @@ def test_pitchesOnScaleNotAllowsOffScalePitches(l, s):
     assert s.check() == unsat
 
 def test_maximisesUniquePitchCount_uses_as_much_of_gamut_as_possible(s, l):
-    count = sum([If(ind, 1, 0) for ind in uniquePitchCounts(-1, 3, l)])
+    count = sum([If(ind, 1, 0) for ind in uniquePitchCounts(-1,3,l)])
     s.maximize(count)
     assert s.check() == sat, "Optimiser should still be sat if whole gamut cannot be filled"
 
