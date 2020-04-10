@@ -16,82 +16,60 @@ class GUI:
         self.app.setApplicationName("SM(Bach)")
         self.window = QWidget()
         self.window.setWindowTitle("SM(Bach)")
-        self.speciesLayout = QHBoxLayout()
+        self.outerLayout = QHBoxLayout()
 
         ###
 
-        self.cfLayout = QVBoxLayout()
+        self.optionsLayout = QVBoxLayout()
 
-        self.cfButton = QPushButton('Create new Cantus Firmus', self.window)
-        self.cfButton.clicked.connect(lambda: self.makeCF())
-        self.cfLayout.addWidget(self.cfButton)
+        self.cfCurrentLabel = QLabel("Current CF")
+        self.cfCurrentLabelSubtitle = QLabel("Denotes semitones from root, note only major keys supported")
+        font = self.cfCurrentLabel.font()
+        font.setPointSize(font.pointSize()/1.4)
+        self.cfCurrentLabelSubtitle.setFont(font)
+        self.cfCurrentTextBox = QLineEdit()
+        self.cfCurrentTextBox.setText("12,11,12,9,11,7,9,9")
+        self.optionsLayout.addWidget(self.cfCurrentLabel)
+        self.optionsLayout.addWidget(self.cfCurrentTextBox)
 
         self.cfLengthLabel = QLabel("Number of notes")
         self.cfLengthTextBox = QLineEdit()
         self.cfLengthTextBox.setText("8")
-        self.cfLayout.addWidget(self.cfLengthLabel)
-        self.cfLayout.addWidget(self.cfLengthTextBox)
+        self.optionsLayout.addWidget(self.cfLengthLabel)
+        self.optionsLayout.addWidget(self.cfLengthTextBox)
 
         self.cfGamutLabel = QLabel("Max semitones from tonic")
         self.cfGamutTextBox = QLineEdit()
-        self.cfGamutTextBox.setText("7")
-        self.cfLayout.addWidget(self.cfGamutLabel)
-        self.cfLayout.addWidget(self.cfGamutTextBox)
-
-        self.cfCurrentLabel = QLabel("Current CF (semitones from tonic (0). Only major (or relative major) supported)")
-        self.cfCurrentTextBox = QLineEdit()
-        self.cfCurrentTextBox.setText("12,11,12,9,11,7,9,9")
-        self.cfLayout.addWidget(self.cfCurrentLabel)
-        self.cfLayout.addWidget(self.cfCurrentTextBox)
+        self.cfGamutTextBox.setText("26")
+        self.optionsLayout.addWidget(self.cfGamutLabel)
+        self.optionsLayout.addWidget(self.cfGamutTextBox)
 
         ###
 
-        self.s1Layout = QVBoxLayout()
-        self.s1Button = QPushButton('Create new first species (using last CF)', self.window)
+        self.speciesLayout = QVBoxLayout()
+
+        self.cfButton = QPushButton('Create new Cantus Firmus', self.window)
+        self.cfButton.clicked.connect(lambda: self.makeCF())
+        self.speciesLayout.addWidget(self.cfButton)
+
+        self.s1Button = QPushButton('Create new first species (using current CF)', self.window)
         self.s1Button.clicked.connect(lambda: self.makeS1())
-        self.s1Layout.addWidget(self.s1Button)
+        self.speciesLayout.addWidget(self.s1Button)
 
-        self.s1GamutLabel = QLabel("Max semitones from tonic")
-        self.s1GamutTextBox = QLineEdit()
-        self.s1GamutTextBox.setText("13")
-        self.s1Layout.addWidget(self.s1GamutLabel)
-        self.s1Layout.addWidget(self.s1GamutTextBox)
-
-        ###
-
-        self.s2Layout = QVBoxLayout()
-        self.s2Button = QPushButton('Create new second species (using last CF)', self.window)
+        self.s2Button = QPushButton('Create new second species (using current CF)', self.window)
         self.s2Button.clicked.connect(lambda: self.makeS2())
-        self.s2Layout.addWidget(self.s2Button)
+        self.speciesLayout.addWidget(self.s2Button)
 
-        self.s2GamutLabel = QLabel("Max semitones from tonic")
-        self.s2GamutTextBox = QLineEdit()
-        self.s2GamutTextBox.setText("13")
-        self.s2Layout.addWidget(self.s2GamutLabel)
-        self.s2Layout.addWidget(self.s2GamutTextBox)
-
-        ###
-
-        self.s3Layout = QVBoxLayout()
-
-        self.s3Button = QPushButton('Create new third species (using last CF)', self.window)
+        self.s3Button = QPushButton('Create new third species (using current CF)', self.window)
         self.s3Button.clicked.connect(lambda: self.makeS3())
-        self.s3Layout.addWidget(self.s3Button)
-
-        self.s3GamutLabel = QLabel("Max semitones from tonic")
-        self.s3GamutTextBox = QLineEdit()
-        self.s3GamutTextBox.setText("13")
-        self.s3Layout.addWidget(self.s3GamutLabel)
-        self.s3Layout.addWidget(self.s3GamutTextBox)
+        self.speciesLayout.addWidget(self.s3Button)
 
         ###
 
-        self.speciesLayout.addLayout(self.cfLayout)
-        self.speciesLayout.addLayout(self.s1Layout)
-        self.speciesLayout.addLayout(self.s2Layout)
-        self.speciesLayout.addLayout(self.s3Layout)
+        self.outerLayout.addLayout(self.optionsLayout)
+        self.outerLayout.addLayout(self.speciesLayout)
 
-        self.window.setLayout(self.speciesLayout)
+        self.window.setLayout(self.outerLayout)
         self.window.show()
         self.app.exec_()
         print("Generator GUI started")
@@ -102,27 +80,29 @@ class GUI:
             gamutLength = int(self.cfGamutTextBox.text())
             cf = self.creator.createNew('cf', length, gamutLength, [])
             print(cf)
+            self.cfCurrentTextBox.setText(",".join([str(x) for x in cf]))
             playVoice(cf)
-            if cf == []:
+            if not cf:
                 m = QMessageBox()
                 m.setText("Nothing could be composed - try another pair of numbers");
                 m.exec_()
-        except Exception:
+        except Exception as e:
+            print(e)
             m = QMessageBox()
             m.setText("Nothing could be composed - try another pair of numbers");
             m.exec_()
-        self.cfCurrentTextBox.setText(",".join([str(x) for x in cf]))
 
     def makeS1(self):
         try:
             length = int(self.cfLengthTextBox.text())
-            gamutLength = int(self.s1GamutTextBox.text())
+            gamutLength = int(self.cfGamutTextBox.text())
             s1 = self.creator.createNew('s1', length, gamutLength, self.getCurrentCF())
             tCF = makeTemporalisedLine(self.getCurrentCF(), NoteLength.WHOLE)
             tS1 = makeTemporalisedLine(s1, NoteLength.WHOLE)
             print(self.getCurrentCF(), tS1)
             playPiece([tCF, tS1])
-        except Exception:
+        except Exception as e:
+            print(e)
             m = QMessageBox()
             m.setText("Nothing could be composed - try another gamut or create a new CF");
             m.exec_()
@@ -130,13 +110,14 @@ class GUI:
     def makeS2(self):
         try:
             length = int(self.cfLengthTextBox.text())
-            gamutLength = int(self.s2GamutTextBox.text())
+            gamutLength = int(self.cfGamutTextBox.text())
             s2 = self.creator.createNew('s2', length, gamutLength, self.getCurrentCF())
             tCF = makeTemporalisedLine(self.getCurrentCF(), NoteLength.WHOLE)
             tS2 = makeTemporalisedLine(s2, NoteLength.HALF)
             print(self.getCurrentCF(), tS2)
             playPiece([tCF, tS2])
-        except Exception:
+        except Exception as e:
+            print(e)
             m = QMessageBox()
             m.setText("Nothing could be composed - try another gamut or create a new CF");
             m.exec_()
@@ -144,13 +125,14 @@ class GUI:
     def makeS3(self):
         try:
             length = int(self.cfLengthTextBox.text())
-            gamutLength = int(self.s3GamutTextBox.text())
+            gamutLength = int(self.cfGamutTextBox.text())
             s3 = self.creator.createNew('s3', length, gamutLength, self.getCurrentCF())
             tCF = makeTemporalisedLine(self.getCurrentCF(), NoteLength.WHOLE)
             tS3 = makeTemporalisedLine(s3, NoteLength.QUARTER)
             print(self.getCurrentCF(), tS3)
             playPiece([tCF, tS3])
-        except Exception:
+        except Exception as e:
+            print(e)
             m = QMessageBox()
             m.setText("Nothing could be composed - try another gamut or create a new CF");
             m.exec_()
