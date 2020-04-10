@@ -22,7 +22,7 @@ def cf(length, name, gamutLength):
 
 @fixture
 def fixedCF(length, name):
-    return Line(length, name+"cf")
+    return Line(length, name + "cf")
 
 @fixture
 def s1(fixedCF, name, gamutLength):
@@ -40,18 +40,17 @@ def s3(fixedCF, name, gamutLength):
 def opt():
     return Optimize()
 
-def test_cf(cf : Spec, opt):
+def test_cf(cf: Spec, opt):
     for c in cf.constraints:
         opt.add(c.formula)
     assert opt.check() == sat
     assert len(opt.assertions()) > len(Optimize().assertions()), "Means that the optimiser has some constraints"
 
-def test_s1(s1 : Spec, opt):
+def test_s1(s1: Spec, opt):
     for c in s1.constraints:
         opt.add(c.formula)
     assert opt.check() == sat
     assert len(opt.assertions()) > len(Optimize().assertions()), "Means that the optimiser has some constraints"
-
 
 def test_s2(s2: Spec, opt):
     for c in s2.constraints:
@@ -59,12 +58,8 @@ def test_s2(s2: Spec, opt):
     assert opt.check() == sat
     assert len(opt.assertions()) > len(Optimize().assertions()), "Means that the optimiser has some constraints"
 
-
 def test_s3(s3: Spec, opt):
     for c in s3.constraints:
         opt.add(c.formula)
     assert opt.check() == sat
     assert len(opt.assertions()) > len(Optimize().assertions()), "Means that the optimiser has some constraints"
-
-
-

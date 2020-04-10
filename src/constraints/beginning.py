@@ -12,7 +12,7 @@ def firstNoteAccompaniesCantusTonic(line: Line) -> Constraint:
             Implies(line[0] > tonicIndex, Or(isOctave(tonicIndex, line[0]), isFifth(tonicIndex, line[0])))
         ),
         ConstraintType.BEGINNING,
-    "First note should either be an octave above or below cantus tonic or a fifth above"
+        "First note should either be an octave above or below cantus tonic or a fifth above"
     )
     # Third case is that line[0] == tonicIndex
 #

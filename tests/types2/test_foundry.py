@@ -25,7 +25,7 @@ def constraint(logic, descr):
 
 @fixture
 def spec(constraint):
-    return Spec(Line(1,""),[constraint], [],[])
+    return Spec(Line(1, ""), [constraint], [], [])
 
 def testFoundryConstructor(foundry, opt):
     assert foundry.opt == opt
@@ -74,7 +74,7 @@ def testExtractPitch(foundry):
     assert foundry.extractPitch(p0) == p1.flattened()
 
 def testExtractPitches(foundry):
-    l = Line(1,'')
+    l = Line(1, '')
     p0 = l[0]
     p1 = ConstPitch(4)
     foundry.apply(Constraint(p0 == p1, ConstraintType.MISC, "bla"))
@@ -109,30 +109,30 @@ def testApplySpecWithTrackingDoesNotTrack(foundry, spec, ):
     assert len(foundry.getReasonsForUnsat()) == 1
 
 def testApplyAllWithoutTrackingIsSat(foundry, constraint):
-    foundry.applyAll([constraint,constraint])
+    foundry.applyAll([constraint, constraint])
     assert foundry.check() == sat
 
 def testApplyAllWithoutTrackingConstrains(foundry, constraint, ):
-    foundry.applyAll([constraint,constraint])
+    foundry.applyAll([constraint, constraint])
     foundry.apply(constraint.inv())
     assert foundry.check() == unsat
 
 def testApplyAllWithoutTrackingDoesNotTrack(foundry, constraint, ):
-    foundry.applyAll([constraint,constraint])
+    foundry.applyAll([constraint, constraint])
     foundry.apply(constraint.inv())
     assert foundry.getReasonsForUnsat() == []
 
 def testApplyAllWithTrackingIsSat(foundry, constraint):
-    foundry.applyAndTrackAll([constraint,constraint])
+    foundry.applyAndTrackAll([constraint, constraint])
     assert foundry.check() == sat
 
 def testApplyAllWithTrackingConstrains(foundry, constraint, ):
-    foundry.applyAndTrackAll([constraint,constraint])
+    foundry.applyAndTrackAll([constraint, constraint])
     foundry.apply(constraint.inv())
     assert foundry.check() == unsat
 
 def testApplyAllWithTrackingDoesNotTrack(foundry, constraint, ):
-    foundry.applyAndTrackAll([constraint,constraint.inv()])
+    foundry.applyAndTrackAll([constraint, constraint.inv()])
     assert len(foundry.getReasonsForUnsat()) == 2
 
 def test_maximise(foundry):
