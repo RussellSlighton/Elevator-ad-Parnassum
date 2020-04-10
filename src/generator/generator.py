@@ -1,7 +1,4 @@
-from typing import Any, List
-
-import pandas as pd
-from z3 import Or, Optimize
+from z3 import Optimize
 
 from src.constraints import distinctFromExample
 from src.specs import *
