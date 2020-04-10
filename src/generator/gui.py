@@ -38,9 +38,9 @@ class GUI:
         self.cfLayout.addWidget(self.cfGamutLabel)
         self.cfLayout.addWidget(self.cfGamutTextBox)
 
-        self.cfCurrentLabel = QLabel("Current CF")
+        self.cfCurrentLabel = QLabel("Current CF (semitones from tonic (0). Only major (or relative major) supported)")
         self.cfCurrentTextBox = QLineEdit()
-        self.cfCurrentTextBox.setText("11,9,11,7,11,7,9,9")
+        self.cfCurrentTextBox.setText("12,11,12,9,11,7,9,9")
         self.cfLayout.addWidget(self.cfCurrentLabel)
         self.cfLayout.addWidget(self.cfCurrentTextBox)
 
