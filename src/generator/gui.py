@@ -140,6 +140,9 @@ class GUI:
     def getCurrentCF(self):
         return [int(x) for x in self.cfCurrentTextBox.text().split(',')]
 
+    def getLayout(self):
+        return self.outerLayout
+
 class Creator:
 
     def __init__(self):

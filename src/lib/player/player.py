@@ -2,7 +2,7 @@ from typing import List
 
 from synthesizer import Player, Synthesizer, Waveform
 
-from src.lib.player import *
+from src.lib.player.equalTemperamentSynth import synth
 from src.lib.types2 import *
 from src.lib.types2.temporalisedLine import asUniqueValues
 

@@ -52,7 +52,7 @@ def goodCF():
 
 @fixture
 def badCF():
-    return [0,2,2,0]
+    return [0,2,2,1]
 
 def test_goodCFIsGood(goodCF):
     assert checkCF(goodCF).isValid()
