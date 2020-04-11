@@ -17,7 +17,7 @@ if __name__ == "__main__":
     selectGenerator.clicked.connect(lambda: generator())
     selectChecker = QPushButton("Checker")
     selectChecker.clicked.connect(lambda: checker())
-    selectRepairer = QPushButton("Reparer")
+    selectRepairer = QPushButton("Repairer")
     #selectGenerator.clicked.connect(lambda: repairer())
 
 
