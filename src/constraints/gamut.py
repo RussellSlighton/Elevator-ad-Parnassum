@@ -5,7 +5,7 @@ from src.types2 import *
 def pitchesWithinGamut(gamutMin: int, gamutMax: int, line: Line) -> Constraint:
     formula = And([And(ConstPitch(gamutMin) <= p, p < ConstPitch(gamutMax)) for p in line])
     return Constraint(formula, ConstraintType.GAMUT,
-                      "Pitches must be between " + str(gamutMin) + " and " + str(gamutMin))
+                      "Pitches must be between " + str(gamutMin) + " and " + str(gamutMax))
 
 def pitchesOnScale(line: Line) -> Constraint:
     formula = And([Or(p.letter == Interval.UNISON().semitoneDistance,

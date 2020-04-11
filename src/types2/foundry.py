@@ -13,20 +13,22 @@ class Foundry:
         self.opt = opt
 
     def applySpec(self, spec: Spec):
-        for c in spec.constraints:
-            self.apply(c)
+        self.applyAll(spec.constraints)
         for mi in spec.minimisations:
             self.minimise(mi)
         for ma in spec.maximisations:
             self.maximise(ma)
 
+        return self
+
     def applyAndTrackSpec(self, spec: Spec):
-        for c in spec.constraints:
-            self.applyAndTrack(c)
+        self.applyAndTrackAll(spec.constraints)
         for mi in spec.minimisations:
             self.minimise(mi)
         for ma in spec.maximisations:
             self.maximise(ma)
+
+        return self
 
     def apply(self, constraint: Constraint):
         self.opt.add(constraint.formula)
@@ -74,5 +76,4 @@ class Foundry:
 
     def extractPitches(self, line: Line):
         self.check()
-        print(self.opt.model())
         return [self.extractPitch(p) for p in line]

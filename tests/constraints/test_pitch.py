@@ -197,3 +197,23 @@ def test_is_dissonant(s):
     assert isDissonantHelper(Interval.SEVENTH().semitoneDistance, Interval.UNISON().semitoneDistance, s) == sat
     assert isDissonantHelper(Interval.FOURTH().semitoneDistance, Interval.UNISON().semitoneDistance, s) == sat
     assert isDissonantHelper(Interval.FIFTH().semitoneDistance, Interval.UNISON().semitoneDistance, s) == unsat
+
+def test_pitchIsValid(s):
+    line = Line(1, '')
+    p = line[0]
+    s.push()
+    s.add(p.letter == IntVal(-1))
+    s.add(pitchesLetterValueValid(line).formula)
+    assert s.check() == unsat
+
+    s.pop()
+    s.push()
+    s.add(p.letter == IntVal(1))
+    s.add(pitchesLetterValueValid(line).formula)
+    assert s.check() == sat
+
+    s.pop()
+    s.push()
+    s.add(p.letter == IntVal(12))
+    s.add(pitchesLetterValueValid(line).formula)
+    assert s.check() == unsat

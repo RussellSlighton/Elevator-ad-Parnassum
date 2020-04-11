@@ -13,7 +13,6 @@ def l():
 def test_has_climax_pitch(s, l):
     s.add(hasClimaxPitch(l).formula)
     assert s.check() == sat
-    print(l[0].octave)
     ps = [s.model()[p.letter].as_long() + 7 * s.model()[p.octave].as_long() for p in l]
     climax = max(ps)
     ps.remove(climax)

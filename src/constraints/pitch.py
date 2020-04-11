@@ -1,7 +1,6 @@
 from z3 import *
 
-from src.types2 import Pitch, ConstPitch
-from src.types2.interval import Interval
+from src.types2 import Pitch, ConstPitch, Line, Constraint, Interval, maxLetter, ConstraintType
 
 # Note, only works upwards - C:G is a fifth, not a third.
 def isNthInterval(n: Interval, n1: Pitch, n2: Pitch):
@@ -79,3 +78,6 @@ def isIntervalOrLarger(n: Interval, n1, n2):
 
 def isIntervalOrSmaller(n: Interval, n1, n2):
     return Interval.absBetween(n1, n2) <= n
+
+def pitchesLetterValueValid(line : Line) -> Constraint:
+    return Constraint(And([And([IntVal(0) <= x.letter, x.letter < IntVal(maxLetter)]) for x in line]), ConstraintType.INVIOLABLE, "Should never be violated")

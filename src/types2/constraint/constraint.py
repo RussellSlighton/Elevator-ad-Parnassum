@@ -13,3 +13,6 @@ class Constraint:
 
     def inv(self):
         return Constraint(Not(self.formula), self.constraintType, "inverse of " + self.description)
+
+    def __eq__(self, other):
+        return self.formula == other.formula

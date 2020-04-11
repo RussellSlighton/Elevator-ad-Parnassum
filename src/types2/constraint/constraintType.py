@@ -9,3 +9,5 @@ class ConstraintType(Enum):
     PITCH = "Pitch constraint"
     SIMULTANEITY = "Simultaneity constraint"
     MISC = "Misc. constraint"
+    CHECKER = "Checker constraint"
+    INVIOLABLE = "Internal constraint"

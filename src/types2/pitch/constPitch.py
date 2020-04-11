@@ -14,4 +14,3 @@ class ConstPitch(Pitch):
             super().__init__(letter, octave)
         else:
             raise Exception("Pitch cannot be constructed from more than two values")
-        assert 0 <= self.letter < maxLetter
