@@ -1,7 +1,7 @@
 from pytest import fixture
 
 from src.generator import Generator
-from src.specs import cantusSpec
+from src.lib.specs import cantusSpec
 
 @fixture
 def length():

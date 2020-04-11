@@ -1,0 +1,20 @@
+[
+  "test_specGenerator.py::test_cf",
+  "test_specGenerator.py::test_s1",
+  "test_specGenerator.py::test_s2",
+  "test_specGenerator.py::test_s3",
+  "test_specFactory.py::test_cf",
+  "test_specFactory.py::test_s1",
+  "test_specFactory.py::test_s2",
+  "test_specFactory.py::test_s3",
+  "test_badSpecGenerator.py::test_powset",
+  "test_badSpecGenerator.py::test_getAllBadSpecs",
+  "test_badSpecGenerator.py::test_allBadSpecsSatisfiable",
+  "test_badSpecGenerator.py::test_allBadSpecsAreBad",
+  "test_badSpecFactory.py::test_allBadSpecsAreBad",
+  "test_badSpecFactory.py::test_allBadSpecsSatisfiable",
+  "test_badSpecFactory.py::test_powset",
+  "test_badSpecFactory.py::test_getAllBadSpecsCorrectSpecCount",
+  "test_badSpecFactory.py::test_someBadSpecsSatisfiable",
+  "test_badSpecFactory.py::test_defaultsAreSatisfiable"
+]

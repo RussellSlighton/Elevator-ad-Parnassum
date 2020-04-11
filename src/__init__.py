@@ -1,1 +1,1 @@
-from src.player import playPiece, playVoice
+from src.lib.player import playPiece, playVoice

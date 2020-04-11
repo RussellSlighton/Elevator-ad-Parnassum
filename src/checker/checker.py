@@ -3,8 +3,8 @@ from typing import List
 from z3 import *
 
 from src.checker.checkerResults import CheckerResult
-from src.specs import *
-from src.types2 import Foundry, ConstPitch, Constraint, ConstraintType
+from src.lib.specs import *
+from src.lib.types2 import Foundry, ConstPitch, Constraint, ConstraintType
 
 def checkCF(cf: List[int]):
     cfPitches = [ConstPitch(x) for x in cf]

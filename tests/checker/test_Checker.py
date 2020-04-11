@@ -1,8 +1,8 @@
 from pytest import fixture
 
 from src.checker.checker import *
-from src.specs import *
-from src.types2 import Foundry, ConstPitch
+from src.lib.specs import *
+from src.lib.types2 import Foundry, ConstPitch
 
 @fixture
 def maxCount():

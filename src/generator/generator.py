@@ -1,7 +1,7 @@
 from z3 import Optimize
 
-from src.constraints import distinctFromExample
-from src.types2 import Foundry, Spec, ConstPitch
+from src.lib.constraints import distinctFromExample
+from src.lib.types2 import Foundry, Spec, ConstPitch
 
 # creates new examples of a given spec - species, length, gamutlength ... (all parameters fixed)
 class Generator():

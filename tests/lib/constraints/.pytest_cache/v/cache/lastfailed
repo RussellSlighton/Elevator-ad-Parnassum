@@ -1,0 +1,8 @@
+{
+  "test_gamut.py::test_gamut_bound_pitch": true,
+  "test_gamut.py::test_gamut_bounds_scale": true,
+  "test_gamut.py::test_gamut_bounds_scale_legal_values_work": true,
+  "test_gamut.py::test_trackUniquePitchCount": true,
+  "test_pitch.py::test_get_unique_pitch_count": true,
+  "test_pitch.py::test_is_OCTAVE": true
+}
