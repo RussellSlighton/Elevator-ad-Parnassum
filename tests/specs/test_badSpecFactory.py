@@ -33,13 +33,13 @@ def test_defaultsAreSatisfiable(spec):
     assert Foundry(Optimize()).applySpec(spec).check() == sat
 
 def test_allBadSpecsSatisfiable(spec):
-    badSpecs = getAllBadSpecs(spec)
+    badSpecs = getAllBadSpecs(spec, 15)
     for badSpec in badSpecs:
         foundry = Foundry(Optimize()).applySpec(badSpec)
         assert foundry.check() == sat
 
 def test_allBadSpecsAreBad(spec):
-    badSpecs = getAllBadSpecs(spec)
+    badSpecs = getAllBadSpecs(spec, 15)
     for badSpec in badSpecs:
         foundry = Foundry(Optimize()).applyAndTrackSpec(badSpec).applyAndTrackSpec(spec)
         assert foundry.check() == unsat
