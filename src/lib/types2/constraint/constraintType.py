@@ -10,4 +10,5 @@ class ConstraintType(Enum):
     SIMULTANEITY = "Simultaneity constraint"
     MISC = "Misc. constraint"
     CHECKER = "Checker constraint"
+    REPAIRER = "Repairer constraint"
     INVIOLABLE = "Internal constraint"

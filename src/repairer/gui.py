@@ -1,7 +1,8 @@
 import sys
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QPushButton, QListWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QPushButton, \
+    QListWidget, QMessageBox
 
 from src import playVoice
 from src.lib import makeTemporalisedLine, NoteLength, playPiece
@@ -78,8 +79,23 @@ class GUI:
         self.repairLayout.addWidget(self.repairS3)
         self.repairLayout.addWidget(self.repairedS3)
 
+        ### options ###
+
+        self.gamutMaxLabel = QLabel("Max Semitones from tonic:")
+        self.gamutMax = QLineEdit()
+        self.gamutMax.setText("20")
+
+        self.optionsLayout = QVBoxLayout()
+        self.optionsLayout.addWidget(self.gamutMaxLabel)
+        self.optionsLayout.addWidget(self.gamutMax)
+
         ### showing ###
 
+        self.optionsLayout.setAlignment(Qt.AlignTop)
+        self.inputLayout.setAlignment(Qt.AlignTop)
+        self.repairLayout.setAlignment(Qt.AlignTop)
+
+        self.outerLayout.addLayout(self.optionsLayout)
         self.outerLayout.addLayout(self.inputLayout)
         self.outerLayout.addLayout(self.repairLayout)
 
@@ -89,48 +105,75 @@ class GUI:
         self.app.exec_()
 
     def doRepairCF(self):
-        print("Rpaired CF")
+        print("Repairing CF")
         cf = [int(x) for x in self.cfInput.text().split(',')]
-        fixed = repairCF(cf)
-        print(fixed)
-        playVoice(cf)
-        self.repairedCF.setText(','.join([str(x) for x in fixed]))
+        try:
+            fixed = repairCF(cf, self.getGamut())
+            print(fixed)
+            playVoice(fixed)
+            self.repairedCF.setText(','.join([str(x) for x in fixed]))
+        except Exception as e:
+            print(e)
+            m = QMessageBox()
+            m.setText("Could not repair, try increasing the maximum distance from the root");
+            m.exec_()
 
     def doRepairS1(self):
         print("Repaired S1")
         cf = [int(x) for x in self.cfInput.text().split(',')]
         s1 = [int(x) for x in self.s1Input.text().split(',')]
-        fixed = repairS1(cf,s1)
-        print(fixed)
-        tCF = makeTemporalisedLine(cf, NoteLength.WHOLE)
-        tS1 = makeTemporalisedLine(s1, NoteLength.WHOLE)
-        playPiece([tCF, tS1])
-        self.repairedS1.setText(','.join([str(x) for x in fixed]))
+        try:
+            fixed = repairS1(cf,s1,self.getGamut())
+            print(fixed)
+            tCF = makeTemporalisedLine(cf, NoteLength.WHOLE)
+            tS1 = makeTemporalisedLine(fixed, NoteLength.WHOLE)
+            playPiece([tCF, tS1])
+            self.repairedS1.setText(','.join([str(x) for x in fixed]))
+        except Exception as e:
+            print(e)
+            m = QMessageBox()
+            m.setText("Could not repair, try increasing the maximum distance from the root");
+            m.exec_()
 
     def doRepairS2(self):
         print("Repairing S2")
         cf = [int(x) for x in self.cfInput.text().split(',')]
         s2 = [int(x) for x in self.s2Input.text().split(',')]
-        fixed = repairS1(cf,s2)
-        print(fixed)
-        tCF = makeTemporalisedLine(cf, NoteLength.WHOLE)
-        tS2 = makeTemporalisedLine(s2, NoteLength.HALF)
-        playPiece([tCF, tS2])
-        self.repairedS2.setText(','.join([str(x) for x in fixed]))
+        try:
+            fixed = repairS2(cf,s2,self.getGamut())
+            print(fixed)
+            tCF = makeTemporalisedLine(cf, NoteLength.WHOLE)
+            tS2 = makeTemporalisedLine(fixed, NoteLength.HALF)
+            playPiece([tCF, tS2])
+            self.repairedS2.setText(','.join([str(x) for x in fixed]))
+        except Exception as e:
+            print(e)
+            m = QMessageBox()
+            m.setText("Could not repair, try increasing the maximum distance from the root");
+            m.exec_()
 
     def doRepairS3(self):
         print("Repairing S3")
         cf = [int(x) for x in self.cfInput.text().split(',')]
         s3 = [int(x) for x in self.s3Input.text().split(',')]
-        fixed = repairS1(cf,s3)
-        print(fixed)
-        tCF = makeTemporalisedLine(cf, NoteLength.WHOLE)
-        tS3 = makeTemporalisedLine(s3, NoteLength.QUARTER)
-        playPiece([tCF, tS3])
-        self.repairedS3.setText(','.join([str(x) for x in fixed]))
+        try:
+            fixed = repairS3(cf,s3,self.getGamut())
+            print(fixed)
+            tCF = makeTemporalisedLine(cf, NoteLength.WHOLE)
+            tS3 = makeTemporalisedLine(fixed, NoteLength.QUARTER)
+            playPiece([tCF, tS3])
+            self.repairedS3.setText(','.join([str(x) for x in fixed]))
+        except Exception as e:
+            print(e)
+            m = QMessageBox()
+            m.setText("Could not repair, try increasing the maximum distance from the root");
+            m.exec_()
 
     def getLayout(self):
         return self.outerLayout
+
+    def getGamut(self):
+        return int(self.gamutMax.text())
 
 
 if __name__ == "__main__":

@@ -1,16 +1,21 @@
 from pytest import fixture
 
-from src.checker.checker import *
+from src.checker.checker import checkCF, checkS3, checkS2, checkS1, Optimize, sat
 from src.lib.specs import *
 from src.lib.types2 import Foundry, ConstPitch
+from src.repairer import repairCF, repairS2, repairS3, repairS1
 
 @fixture
 def maxCount():
     return 6
 
 @fixture
-def cantus():
-    return cantusSpec(4,5, '')
+def cantusGamut():
+    return 5
+
+@fixture
+def cantus(cantusGamut):
+    return cantusSpec(4,cantusGamut, '')
 
 @fixture
 def highSpeciesGamut():
@@ -24,25 +29,19 @@ def finishedLineGamutSize():
 def foundry():
     return Foundry(Optimize())
 
-@fixture
-def finishedLine(finishedLineGamutSize):
-    return list(range(0, finishedLineGamutSize))
-
-def test_getGamutLength(finishedLineGamutSize, finishedLine):
-    assert getGamutLength(finishedLine) == finishedLineGamutSize
-
 ### cf ###
 
-def test_cfValidWorksOnValid(foundry, cantus):
-    assert checkCF(foundry.applySpec(cantus).extractPitches(cantus.line)).isValid()
+def test_repairGoodCFDoesNothing(foundry, cantus, cantusGamut):
+    res = foundry.applySpec(cantus).extractPitches(cantus.line)
+    assert res == repairCF(res, cantusGamut)
 
 #TODO: NEED TO VALIDATE REASONS!
-def test_cfValidWorksOnInvalid(foundry, cantus, maxCount):
+def test_repairCFWorksOnBrokenCF(foundry, cantus, maxCount, cantusGamut):
     badSpecs = getAllBadSpecs(cantus, maxCount)
     for badSpec in badSpecs:
         foundry = Foundry(Optimize()).applySpec(badSpec)
         cantus = foundry.extractPitches(badSpec.line)
-        assert checkCF(cantus).isValid() == False
+        assert checkCF(repairCF(cantus, cantusGamut)).isValid()
 
 ### util ###
 
@@ -80,25 +79,27 @@ def test_badCFIsS1Sat(s1BadCF):
     foundry.applySpec(s1BadCF)
     assert foundry.check() == sat
 
-def test_s1ValidWorksOnValidS1ValidCF(foundry, s1GoodCF, goodCF):
-    checkS1(goodCF, foundry.applySpec(s1GoodCF).extractPitches(s1GoodCF.line)).isValid()
+def test_repairS1WithGoodCFDoesNoting(foundry, s1GoodCF, goodCF):
+    res = foundry.applySpec(s1GoodCF).extractPitches(s1GoodCF.line)
+    assert res == repairS1(goodCF, res, max(res)+1)
 
-def test_s1ValidWorksOnValidS1InvalidCF(foundry, s1BadCF, badCF):
-    assert checkS1(badCF, foundry.applySpec(s1BadCF).extractPitches(s1BadCF.line)).isValid()
+def test_repairS1WithBadCFDoesNoting(foundry, s1BadCF, badCF):
+    res = foundry.applySpec(s1BadCF).extractPitches(s1BadCF.line)
+    assert res == repairS1(badCF, res, max(res)+1)
 
-def test_s1ValidWorksOnInvalidS1BadCF(foundry, badCF, s1BadCF, maxCount):
+def test_repairS1WorksFromBadCF(foundry, badCF, s1BadCF, maxCount, highSpeciesGamut):
     badSpecs = getAllBadSpecs(s1BadCF, maxCount)
     for badSpec in badSpecs:
         foundry = Foundry(Optimize()).applySpec(badSpec)
         s1BadCF = foundry.extractPitches(badSpec.line)
-        assert checkS1(badCF, s1BadCF).isValid() == False
+        assert checkS1(badCF, repairS1(badCF, s1BadCF, highSpeciesGamut)).isValid() == True
 
-def test_s1ValidWorksOnInvalidS1GoodCF(foundry, goodCF, s1GoodCF, maxCount):
+def test_repairS1WorksFromGoodCF(foundry, goodCF, s1GoodCF, maxCount, highSpeciesGamut):
     badSpecs = getAllBadSpecs(s1GoodCF, maxCount)
     for badSpec in badSpecs:
         foundry = Foundry(Optimize()).applySpec(badSpec)
         s1GoodCF = foundry.extractPitches(badSpec.line)
-        assert checkS1(goodCF, s1GoodCF).isValid() == False
+        assert checkS1(goodCF, repairS1(goodCF, s1GoodCF, highSpeciesGamut)).isValid() == True
 
 ### s2 ###
 
@@ -120,30 +121,32 @@ def test_badCFIsS2Sat(s2BadCF):
     foundry.applySpec(s2BadCF)
     assert foundry.check() == sat
 
-def test_s2ValidWorksOnValidS2ValidCF(foundry, s2GoodCF, goodCF):
-    checkS2(goodCF, foundry.applySpec(s2GoodCF).extractPitches(s2GoodCF.line)).isValid()
+def test_repairS2WithGoodCFDoesNoting(foundry, s2GoodCF, goodCF):
+    res = foundry.applySpec(s2GoodCF).extractPitches(s2GoodCF.line)
+    assert res == repairS2(goodCF, res, max(res)+1)
 
-def test_s2ValidWorksOnValidS2InvalidCF(foundry, s2BadCF, badCF):
-    assert checkS2(badCF, foundry.applySpec(s2BadCF).extractPitches(s2BadCF.line)).isValid()
+def test_repairS2WithBadCFDoesNoting(foundry, s2BadCF, badCF):
+    res = foundry.applySpec(s2BadCF).extractPitches(s2BadCF.line)
+    assert res == repairS2(badCF, res, max(res)+1)
 
 @fixture
 def s2MaxCounts(maxCount):
     # The s3 tests are really slow
     return int(maxCount / 2)
 
-def test_s2ValidWorksOnInvalidS2BadCF(foundry, badCF, s2BadCF, s2MaxCounts):
+def test_repairS2WorksFromBadCF(foundry, badCF, s2BadCF, s2MaxCounts, highSpeciesGamut):
     badSpecs = getAllBadSpecs(s2BadCF, s2MaxCounts)
     for badSpec in badSpecs:
         foundry = Foundry(Optimize()).applySpec(badSpec)
         s2BadCF = foundry.extractPitches(badSpec.line)
-        assert checkS2(badCF, s2BadCF).isValid() == False
+        assert checkS2(badCF, repairS2(badCF, s2BadCF, highSpeciesGamut)).isValid() == True
 
-def test_s2ValidWorksOnInvalidS2GoodCF(foundry, goodCF, s2GoodCF, s2MaxCounts):
+def test_repairS2WorksFromGoodCF(foundry, goodCF, s2GoodCF, s2MaxCounts, highSpeciesGamut):
     badSpecs = getAllBadSpecs(s2GoodCF, s2MaxCounts)
     for badSpec in badSpecs:
         foundry = Foundry(Optimize()).applySpec(badSpec)
         s2GoodCF = foundry.extractPitches(badSpec.line)
-        assert checkS2(goodCF, s2GoodCF).isValid() == False
+        assert checkS2(goodCF, repairS2(goodCF, s2GoodCF, highSpeciesGamut)).isValid() == True
 
 ### s3 ###
 
@@ -165,28 +168,31 @@ def test_badCFIsS3Sat(s3BadCF):
     foundry.applySpec(s3BadCF)
     assert foundry.check() == sat
 
-def test_s3ValidWorksOnValidS2ValidCF(foundry, s3GoodCF, goodCF):
-    checkS3(goodCF, foundry.applySpec(s3GoodCF).extractPitches(s3GoodCF.line)).isValid()
+def test_repairS3WithGoodCFDoesNoting(foundry, s3GoodCF, goodCF):
+    res = foundry.applySpec(s3GoodCF).extractPitches(s3GoodCF.line)
+    assert res == repairS3(goodCF, res, max(res)+1)
 
-def test_s3ValidWorksOnValidS2InvalidCF(foundry, s3BadCF, badCF):
-    assert checkS3(badCF, foundry.applySpec(s3BadCF).extractPitches(s3BadCF.line)).isValid()
+def test_repairS3WithBadCFDoesNoting(foundry, s3BadCF, badCF):
+    res = foundry.applySpec(s3BadCF).extractPitches(s3BadCF.line)
+    assert res == repairS3(badCF, res, max(res)+1)
 
 @fixture
 def s3MaxCounts(s2MaxCounts):
     # The s3 tests are really slow
-    return int(s2MaxCounts / 2)
+    return 1
 
-def test_s3ValidWorksOnInvalidS3BadCF(foundry, badCF, s3BadCF, s3MaxCounts):
-    badSpecs = getAllBadSpecs(s3BadCF, s3MaxCounts)
-    for badSpec in badSpecs:
-        foundry = Foundry(Optimize()).applySpec(badSpec)
-        s3BadCF = foundry.extractPitches(badSpec.line)
-        assert checkS3(badCF, s3BadCF).isValid() == False
-
-def test_s3ValidWorksOnInvalidS3GoodCF(foundry, goodCF, s3GoodCF, s3MaxCounts):
-    badSpecs = getAllBadSpecs(s3GoodCF, s3MaxCounts)
-    for badSpec in badSpecs:
-        foundry = Foundry(Optimize()).applySpec(badSpec)
-        s3GoodCF = foundry.extractPitches(badSpec.line)
-        assert checkS3(goodCF, s3GoodCF).isValid() == False
+#too slow :(
+# def test_repairS3WorksFromBadCF(foundry, badCF, s3BadCF, s3MaxCounts, highSpeciesGamut):
+#     badSpecs = getAllBadSpecs(s3BadCF, s3MaxCounts)
+#     for badSpec in badSpecs:
+#         foundry = Foundry(Optimize()).applySpec(badSpec)
+#         s3BadCF = foundry.extractPitches(badSpec.line)
+#         assert checkS3(badCF, repairS3(badCF, s3BadCF, highSpeciesGamut)).isValid() == True
+#
+# def test_repairS3WorksFromGoodCF(foundry, goodCF, s3GoodCF, s3MaxCounts, highSpeciesGamut):
+#     badSpecs = getAllBadSpecs(s3GoodCF, s3MaxCounts)
+#     for badSpec in badSpecs:
+#         foundry = Foundry(Optimize()).applySpec(badSpec)
+#         s3GoodCF = foundry.extractPitches(badSpec.line)
+#         assert checkS3(goodCF, repairS3(goodCF, s3GoodCF, highSpeciesGamut)).isValid() == True
 

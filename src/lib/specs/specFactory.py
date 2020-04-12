@@ -22,7 +22,7 @@ def __baseLineSpec(gamutLength, line):
                 __universalMaximisations(gamutLength, line),
                 __universalMinimisations(line))
 
-def cantusSpec(length, gamutLength, name):
+def     cantusSpec(length, gamutLength, name):
     line = Line(length, "CF_" + name)
     spec = __baseLineSpec(gamutLength, line)
     spec.constraints += [
