@@ -13,7 +13,7 @@ class GUI:
         self.creator = Creator()
 
         self.window = QWidget()
-        self.window.setWindowTitle("SM(Bach)")
+        self.window.setWindowTitle("Generator")
         self.outerLayout = QHBoxLayout()
 
         ###
