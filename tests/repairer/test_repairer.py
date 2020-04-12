@@ -1,13 +1,11 @@
 from pytest import fixture
 
 from src.checker.checker import checkCF, checkS3, checkS2, checkS1, Optimize, sat
+from src.lib import makeSimMap, makeTemporalisedLine, NoteLength
 from src.lib.specs import *
 from src.lib.types2 import Foundry, ConstPitch
 from src.repairer import repairCF, repairS2, repairS3, repairS1
-
-@fixture
-def maxCount():
-    return 6
+from src.repairer.repairer import smartRepairLine
 
 @fixture
 def cantusGamut():
@@ -15,7 +13,74 @@ def cantusGamut():
 
 @fixture
 def cantus(cantusGamut):
-    return cantusSpec(4,cantusGamut, '')
+    return cantusSpec(5,cantusGamut, '')
+
+
+@fixture
+def workingCF(cantus):
+    f = Foundry(Optimize())
+    f.applySpec(cantus)
+    return f.extractPitches(cantus.line)
+
+def test_beginningFailure(workingCF, cantus, cantusGamut):
+    workingCF[0] = 2
+    assert checkCF(workingCF).reasons[0].split(':')[0].split('.')[1] == "BEGINNING"
+    symCF = [ConstPitch(x) for x in workingCF]
+    sm = makeSimMap([makeTemporalisedLine(workingCF, NoteLength.WHOLE)],
+                    makeTemporalisedLine(workingCF, NoteLength.WHOLE))
+    x = smartRepairLine(symCF, cantus, checkCF(workingCF), cantusGamut, sm)
+    assert x is not None
+    assert checkCF(x).isValid()
+
+def test_conclusionFailure(workingCF, cantus, cantusGamut):
+    workingCF[-1] = 2
+    assert checkCF(workingCF).reasons[0].split(':')[0].split('.')[1] == "CONCLUSION"
+    symCF = [ConstPitch(x) for x in workingCF]
+    sm = makeSimMap([makeTemporalisedLine(symCF, NoteLength.WHOLE)],
+                    makeTemporalisedLine(symCF, NoteLength.WHOLE))
+    x = smartRepairLine(symCF, cantus, checkCF(workingCF), cantusGamut, sm)
+    assert x is not None
+    assert checkCF(x).isValid()
+
+def test_climaxFailure(workingCF, cantus, cantusGamut):
+    workingCF[2] = max(workingCF)
+    workingCF[1] = max(workingCF)
+    assert checkCF(workingCF).reasons[0].split(':')[0].split('.')[1] == "CLIMAX"
+    symCF = [ConstPitch(x) for x in workingCF]
+    sm = makeSimMap([makeTemporalisedLine(symCF, NoteLength.WHOLE)],
+                    makeTemporalisedLine(symCF, NoteLength.WHOLE))
+    x = smartRepairLine(symCF, cantus, checkCF(workingCF), cantusGamut, sm)
+    assert x is not None
+    assert checkCF(x).isValid()
+
+def test_gamutFailure(workingCF, cantus, cantusGamut):
+    workingCF[2] = 1
+    assert checkCF(workingCF).reasons[0].split(':')[0].split('.')[1] == "GAMUT"
+    symCF = [ConstPitch(x) for x in workingCF]
+    sm = makeSimMap([makeTemporalisedLine(symCF, NoteLength.WHOLE)],
+                    makeTemporalisedLine(symCF, NoteLength.WHOLE))
+    x = smartRepairLine(symCF, cantus, checkCF(workingCF), cantusGamut, sm)
+    assert x is not None
+    assert checkCF(x).isValid()
+
+
+def test_SimFailure(workingCF):
+    cf = workingCF
+    s1 = workingCF.copy()
+    s1[1] = s1[1] + 11 #seventh
+    assert checkS1(cf, s1).reasons[0].split(':')[0].split('.')[1] == "SIMULTANEITY"
+    symCF = [ConstPitch(x) for x in cf]
+    symS1 = [ConstPitch(x) for x in s1]
+    sm = makeSimMap([makeTemporalisedLine(symCF, NoteLength.WHOLE)],
+                    makeTemporalisedLine(symS1, NoteLength.WHOLE))
+    x = smartRepairLine(symS1, firstSpeciesSpec(symCF, 20, ''), checkS1(cf, s1), 13, sm)
+    assert x is not None
+    assert checkS1(cf,x).isValid()
+
+
+@fixture
+def maxCount():
+    return 6
 
 @fixture
 def highSpeciesGamut():
@@ -35,7 +100,6 @@ def test_repairGoodCFDoesNothing(foundry, cantus, cantusGamut):
     res = foundry.applySpec(cantus).extractPitches(cantus.line)
     assert res == repairCF(res, cantusGamut)
 
-#TODO: NEED TO VALIDATE REASONS!
 def test_repairCFWorksOnBrokenCF(foundry, cantus, maxCount, cantusGamut):
     badSpecs = getAllBadSpecs(cantus, maxCount)
     for badSpec in badSpecs:

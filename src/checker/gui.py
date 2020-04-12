@@ -9,8 +9,6 @@ class GUI:
     def __init__(self):
         print("Checker GUI starting")
 
-        self.app = QApplication(sys.argv)
-        self.app.setApplicationName("Checker")
         self.window = QWidget()
         self.window.setWindowTitle("Checker")
         self.outerLayout = QHBoxLayout()
@@ -84,7 +82,6 @@ class GUI:
 
         self.window.setLayout(self.outerLayout)
         self.window.show()
-        self.app.exec_()
 
     def doCheckCF(self):
         print("Checking CF")
@@ -146,4 +143,6 @@ class GUI:
 
 
 if __name__ == "__main__":
+    app = QApplication([])
     GUI()
+    app.exec_()

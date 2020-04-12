@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QVB
 
 from src.generator import GUI as generator
 from src.checker import GUI as checker
+from src.repairer import  GUI as repairer
 
 if __name__ == "__main__":
     print("Selector GUI starting")
@@ -18,7 +19,7 @@ if __name__ == "__main__":
     selectChecker = QPushButton("Checker")
     selectChecker.clicked.connect(lambda: checker())
     selectRepairer = QPushButton("Repairer")
-    #selectGenerator.clicked.connect(lambda: repairer())
+    selectRepairer.clicked.connect(lambda: repairer())
 
 
     selectLayout = QHBoxLayout()

@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QPushButton, \
-    QListWidget, QMessageBox
+     QMessageBox
 
 from src import playVoice
 from src.lib import makeTemporalisedLine, NoteLength, playPiece
@@ -11,9 +11,6 @@ from src.repairer.repairer import repairCF, repairS1, repairS2, repairS3
 class GUI:
     def __init__(self):
         print("Repairer GUI starting")
-
-        self.app = QApplication(sys.argv)
-        self.app.setApplicationName("Repairer")
         self.window = QWidget()
         self.window.setWindowTitle("Repairer")
         self.outerLayout = QHBoxLayout()
@@ -102,7 +99,6 @@ class GUI:
 
         self.window.setLayout(self.outerLayout)
         self.window.show()
-        self.app.exec_()
 
     def doRepairCF(self):
         print("Repairing CF")
@@ -132,7 +128,7 @@ class GUI:
         except Exception as e:
             print(e)
             m = QMessageBox()
-            m.setText("Could not repair, try increasing the maximum distance from the root");
+            m.setText("Could not repair, try increasing the maximum distance from the root or adjusting the line length")
             m.exec_()
 
     def doRepairS2(self):
@@ -149,7 +145,7 @@ class GUI:
         except Exception as e:
             print(e)
             m = QMessageBox()
-            m.setText("Could not repair, try increasing the maximum distance from the root");
+            m.setText("Could not repair, try increasing the maximum distance from the root or adjusting the line length")
             m.exec_()
 
     def doRepairS3(self):
@@ -166,7 +162,7 @@ class GUI:
         except Exception as e:
             print(e)
             m = QMessageBox()
-            m.setText("Could not repair, try increasing the maximum distance from the root");
+            m.setText("Could not repair, try increasing the maximum distance from the root or adjusting the line length")
             m.exec_()
 
     def getLayout(self):
@@ -177,4 +173,6 @@ class GUI:
 
 
 if __name__ == "__main__":
+    app = QApplication([])
     GUI()
+    app.exec_()

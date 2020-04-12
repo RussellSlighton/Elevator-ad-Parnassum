@@ -12,8 +12,6 @@ class GUI:
         print("Generator GUI starting")
         self.creator = Creator()
 
-        self.app = QApplication(sys.argv)
-        self.app.setApplicationName("SM(Bach)")
         self.window = QWidget()
         self.window.setWindowTitle("SM(Bach)")
         self.outerLayout = QHBoxLayout()
@@ -71,7 +69,6 @@ class GUI:
 
         self.window.setLayout(self.outerLayout)
         self.window.show()
-        self.app.exec_()
         print("Generator GUI started")
 
     def makeCF(self):
@@ -170,4 +167,6 @@ class Creator:
             return g.createNew()
 
 if __name__ == "__main__":
-    gui = GUI()
+    app = QApplication([])
+    GUI()
+    app.exec_()
