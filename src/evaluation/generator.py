@@ -4,7 +4,7 @@ import datetime
 
 import pandas as pd
 
-from evaluation.util import timeWithTimeout
+from src.evaluation.util import timeWithTimeout
 from src.generator import Generator
 from src.lib import cantusSpec, Spec, firstSpeciesSpec, ConstPitch, secondSpeciesSpec, thirdSpeciesSpec
 
@@ -29,7 +29,7 @@ def generateCanti(powersOfTwo):
         while True:
             if i == 5:
                 causes.append((length, gamut, 'over5'))
-                break;
+                break
             i += 1
             res, runtime = timeWithTimeout(lambda : g.createNew(), 10)
 
@@ -88,7 +88,7 @@ def generateOtherLines(powersOfTwo, specMaker, name):
         while True:
             if i == 5:
                 causes.append((length, gamut, 'over5'))
-                break;
+                break
             i += 1
             res, runtime = timeWithTimeout(lambda : g.createNew(), 10)
             # No more unique output for task

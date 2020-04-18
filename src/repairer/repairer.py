@@ -86,6 +86,7 @@ def repairLine(broken : List[Pitch], spec : Spec, reasons : CheckerResult, gamut
     smart = smartRepairLine(broken, spec, reasons, gamutMax, sm)
     print("trying smart")
     if smart is not None:
+        print("smart worked!")
         return smart
     else:
         print("smart failed")

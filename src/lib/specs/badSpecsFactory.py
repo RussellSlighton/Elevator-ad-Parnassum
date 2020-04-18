@@ -7,7 +7,7 @@ from z3 import Optimize, sat
 from src.lib.constraints import pitchesLetterValueValid
 from src.lib.types2 import Spec, Foundry
 
-def getAllBadSpecs(spec : Spec, maxCount = None) -> List[Spec]:
+def getAllBadSpecs(spec : Spec, maxCount = None, doShuffle = True, filterOutUnsatisfiable = True) -> List[Spec]:
     badSpecs = []
     constraintsToInclude = powset(spec.constraints)
     constraintsToInvert = constraintsToInclude[::-1]
@@ -15,7 +15,8 @@ def getAllBadSpecs(spec : Spec, maxCount = None) -> List[Spec]:
     constraintsToInclude = constraintsToInclude[:-1]
     constraintsToInvert = constraintsToInvert[:-1]
 
-    constraintsToInclude, constraintsToInvert = shuffle(constraintsToInclude, constraintsToInvert)
+    if doShuffle:
+        constraintsToInclude, constraintsToInvert = shuffle(constraintsToInclude, constraintsToInvert)
 
     if maxCount is None:
         maxCount = len(constraintsToInclude)
@@ -29,8 +30,10 @@ def getAllBadSpecs(spec : Spec, maxCount = None) -> List[Spec]:
         badSpec = Spec(spec.line, constraints, spec.maximisations, spec.minimisations)
         foundry = Foundry(Optimize()).applySpec(badSpec)
 
-        # We want to make sure inverting one doesn't render the bad spec invalid due to conflict with an overlapping constraint
-        if foundry.check() == sat:
+        if filterOutUnsatisfiable:
+            if foundry.check() == sat:
+                badSpecs.append(badSpec)
+        else:
             badSpecs.append(badSpec)
 
     return badSpecs
