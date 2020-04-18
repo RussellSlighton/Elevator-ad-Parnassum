@@ -1,0 +1,65 @@
+length,gamut,result
+4,4,No possible lines
+4,8,All outputs found
+4,12,All outputs found
+4,16,All outputs found
+4,20,All outputs found
+4,24,All outputs found
+4,28,All outputs found
+4,32,All outputs found
+8,4,No possible lines
+8,8,over5
+8,12,over5
+8,16,over5
+8,20,over5
+8,24,over5
+8,28,over5
+8,32,over5
+12,4,No possible lines
+12,8,over5
+12,12,over5
+12,16,over5
+12,20,over5
+12,24,over5
+12,28,over5
+12,32,over5
+16,4,No possible lines
+16,8,over5
+16,12,over5
+16,16,over5
+16,20,over5
+16,24,over5
+16,28,over5
+16,32,over5
+20,4,No possible lines
+20,8,over5
+20,12,over5
+20,16,over5
+20,20,over5
+20,24,over5
+20,28,over5
+20,32,over5
+24,4,No possible lines
+24,8,over5
+24,12,over5
+24,16,over5
+24,20,over5
+24,24,over5
+24,28,over5
+24,32,over5
+28,4,No possible lines
+28,8,over5
+28,12,over5
+28,16,over5
+28,20,over5
+28,24,over5
+28,28,over5
+28,32,over5
+32,4,No possible lines
+32,8,over5
+32,12,over5
+32,16,over5
+32,20,over5
+32,24,over5
+32,28,over5
+32,32,over5

@@ -1,5 +1,7 @@
+pandas
 scikit-learn
 pytest==5.3.5
 z3-solver==4.8.7.0
 synthesizer==0.1.5
 PyQt5==5.14.2
+interruptingcow==0.8

@@ -1,0 +1,73 @@
+length,gamut,result
+4,4,Invalid cf
+4,4,Invalid species
+4,8,No possible species
+4,12,No possible species
+4,16,over5
+4,20,over5
+4,24,over5
+4,28,over5
+4,32,over5
+8,4,Invalid cf
+8,4,Invalid species
+8,8,No possible species
+8,12,No possible species
+8,16,over5
+8,20,over5
+8,24,over5
+8,28,over5
+8,32,over5
+12,4,Invalid cf
+12,4,Invalid species
+12,8,No possible species
+12,12,No possible species
+12,16,over5
+12,20,over5
+12,24,over5
+12,28,over5
+12,32,over5
+16,4,Invalid cf
+16,4,Invalid species
+16,8,No possible species
+16,12,No possible species
+16,16,over5
+16,20,over5
+16,24,over5
+16,28,over5
+16,32,over5
+20,4,Invalid cf
+20,4,Invalid species
+20,8,No possible species
+20,12,No possible species
+20,16,All outputs found
+20,20,No possible species
+20,24,No possible species
+20,28,No possible species
+20,32,No possible species
+24,4,Invalid cf
+24,4,Invalid species
+24,8,No possible species
+24,12,No possible species
+24,16,No possible species
+24,20,No possible species
+24,24,No possible species
+24,28,No possible species
+24,32,No possible species
+28,4,Invalid cf
+28,4,Invalid species
+28,8,No possible species
+28,12,No possible species
+28,16,No possible species
+28,20,No possible species
+28,24,No possible species
+28,28,No possible species
+28,32,No possible species
+32,4,Invalid cf
+32,4,Invalid species
+32,8,No possible species
+32,12,No possible species
+32,16,No possible species
+32,20,No possible species
+32,24,No possible species
+32,28,No possible species
+32,32,No possible species
