@@ -24,7 +24,6 @@ def bruteForceRepairLine(broken : List[Pitch], spec : Spec) -> List[int]:
 def smartRepairLine(broken : List[Pitch], spec : Spec, reasons : CheckerResult, gamutMax, sm : SimMap) -> List[int]:
     reasonsStrings = [x.split(":")[0].split('.')[1] for x in reasons.reasons]
     reasonsEnums = [ConstraintType[x] for x in reasonsStrings]
-    print(reasonsEnums)
 
     fixedIndicies = list(range(0, len(broken)))
 
@@ -84,13 +83,9 @@ def smartRepairLine(broken : List[Pitch], spec : Spec, reasons : CheckerResult, 
 
 def repairLine(broken : List[Pitch], spec : Spec, reasons : CheckerResult, gamutMax, sm) -> List[int]:
     smart = smartRepairLine(broken, spec, reasons, gamutMax, sm)
-    print("trying smart")
     if smart is not None:
-        print("smart worked!")
         return smart
     else:
-        print("smart failed")
-        print("trying brute force")
         return bruteForceRepairLine(broken,spec)
 
 

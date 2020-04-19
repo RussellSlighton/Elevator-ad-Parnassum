@@ -9,5 +9,6 @@ def timeWithTimeout(function, time):
             end = timer()
             timeTaken = end - start
             return output, timeTaken
-    except RuntimeError:
+    except RuntimeError as e:
+        print(e, "error")
         return None,None
